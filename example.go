@@ -11,12 +11,11 @@ import (
 func Example() {
 	// Create client configuration
 	config := &Config{
-		BaseURL:    "https://openapi1.ourvend.com", // Test environment
-		AppID:      "",
-		Key:        "",
-		Secret:     "",
-		Timeout:    30 * time.Second,
-		RetryCount: 3,
+		BaseURL: "https://openapi1.ourvend.com", // Test environment
+		AppID:   "",
+		Key:     "",
+		Secret:  "",
+		Timeout: 30 * time.Second,
 	}
 
 	// Create client

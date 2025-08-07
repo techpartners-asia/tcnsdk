@@ -7,7 +7,6 @@ A clean, comprehensive Go client for the SAAS API V2 using [resty v3](https://re
 - **Clean Architecture**: Well-structured, maintainable code following Go best practices
 - **Type Safety**: Comprehensive type definitions for all API requests and responses
 - **Error Handling**: Proper error handling with meaningful error messages
-- **Retry Logic**: Built-in retry mechanism for failed requests
 - **Service Separation**: Organized into logical services (Machine, Order)
 - **Context Support**: Full context support for cancellation and timeouts
 - **Constants**: Named constants for all enum values
@@ -34,12 +33,11 @@ import (
 func main() {
     // Create client configuration
     config := &tcnsdk.Config{
-        BaseURL:    "https://openapi1.ourvend.com", // Test environment
-        AppID:      "your-app-id",
-        Key:        "your-key",
-        Secret:     "your-secret",
-        Timeout:    30 * time.Second,
-        RetryCount: 3,
+        BaseURL: "https://openapi1.ourvend.com", // Test environment
+        AppID:   "your-app-id",
+        Key:     "your-key",
+        Secret:  "your-secret",
+        Timeout: 30 * time.Second,
     }
 
     // Create client
@@ -67,12 +65,11 @@ func main() {
 
 ```go
 type Config struct {
-    BaseURL    string        // API base URL
-    AppID      string        // Application ID
-    Key        string        // API Key
-    Secret     string        // API Secret
-    Timeout    time.Duration // Request timeout
-    RetryCount int           // Number of retries
+    BaseURL string        // API base URL
+    AppID   string        // Application ID
+    Key     string        // API Key
+    Secret  string        // API Secret
+    Timeout time.Duration // Request timeout
 }
 ```
 

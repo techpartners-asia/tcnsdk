@@ -19,20 +19,18 @@ type Client struct {
 
 // Config holds the client configuration
 type Config struct {
-	BaseURL    string
-	AppID      string
-	Key        string
-	Secret     string
-	Timeout    time.Duration
-	RetryCount int
+	BaseURL string
+	AppID   string
+	Key     string
+	Secret  string
+	Timeout time.Duration
 }
 
 // DefaultConfig returns a default configuration
 func DefaultConfig() *Config {
 	return &Config{
-		BaseURL:    "https://openapi1.ourvend.com",
-		Timeout:    30 * time.Second,
-		RetryCount: 3,
+		BaseURL: "https://openapi1.ourvend.com",
+		Timeout: 30 * time.Second,
 	}
 }
 
@@ -44,10 +42,7 @@ func NewClient(config *Config) *Client {
 
 	client := resty.New().
 		SetBaseURL(config.BaseURL).
-		SetTimeout(config.Timeout).
-		SetRetryCount(config.RetryCount).
-		SetRetryWaitTime(1 * time.Second).
-		SetRetryMaxWaitTime(5 * time.Second)
+		SetTimeout(config.Timeout)
 
 	c := &Client{
 		client: client,

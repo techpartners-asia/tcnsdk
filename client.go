@@ -25,6 +25,7 @@ type Config struct {
 	Key     string
 	Secret  string
 	Timeout time.Duration
+	Debug   bool
 }
 
 // DefaultConfig returns a default configuration
@@ -32,6 +33,7 @@ func DefaultConfig() *Config {
 	return &Config{
 		BaseURL: "https://openapi1.ourvend.com",
 		Timeout: 30 * time.Second,
+		Debug:   false,
 	}
 }
 
@@ -43,7 +45,8 @@ func NewClient(config *Config) *Client {
 
 	client := resty.New().
 		SetBaseURL(config.BaseURL).
-		SetTimeout(config.Timeout)
+		SetTimeout(config.Timeout).
+		SetDebug(config.Debug)
 
 	c := &Client{
 		client: client,

@@ -13,8 +13,9 @@ type Client struct {
 	config *Config
 
 	// Services
-	Machine *MachineService
-	Order   *OrderService
+	Machine     *MachineService
+	Order       *OrderService
+	Recognition *RecognitionService
 }
 
 // Config holds the client configuration
@@ -52,6 +53,7 @@ func NewClient(config *Config) *Client {
 	// Initialize services
 	c.Machine = &MachineService{client: c}
 	c.Order = &OrderService{client: c}
+	c.Recognition = &RecognitionService{client: c}
 
 	return c
 }

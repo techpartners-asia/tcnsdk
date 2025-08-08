@@ -13,46 +13,46 @@ type OrderService struct {
 
 // OpenDoorRequest represents door opening request
 type OpenDoorRequest struct {
-	OrderID         string `json:"orderId"`
-	MachineID       string `json:"machineId"`
-	DoorNo          int    `json:"doorNo"`
-	TranseType      int    `json:"transeType"`
-	CustomerDetails string `json:"customerDetails,omitempty"`
-	TimeSp          int64  `json:"timeSp"`
-	NotifyURL       string `json:"NotifyUrl"`
-	Remark          string `json:"remark,omitempty"`
+	OrderID         string     `json:"orderId"`
+	MachineID       string     `json:"machineId"`
+	DoorNo          int        `json:"doorNo"`
+	TranseType      TranseType `json:"transeType"`
+	CustomerDetails string     `json:"customerDetails,omitempty"`
+	TimeSp          int64      `json:"timeSp"`
+	NotifyURL       string     `json:"NotifyUrl"`
+	Remark          string     `json:"remark,omitempty"`
 }
 
 // OpenDoorResponse represents door opening response
 type OpenDoorResponse struct {
-	OrderID    string `json:"OrderId"`
-	TranseType int    `json:"TranseType"`
-	Action     string `json:"Action"`
-	Status     bool   `json:"Status"`
-	Msg        string `json:"Msg"`
-	Data       string `json:"Data"`
+	OrderID    string     `json:"OrderId"`
+	TranseType TranseType `json:"TranseType"`
+	Action     string     `json:"Action"`
+	Status     bool       `json:"Status"`
+	Msg        string     `json:"Msg"`
+	Data       string     `json:"Data"`
 }
 
 // RestockOpenDoorRequest represents restock door opening request
 type RestockOpenDoorRequest struct {
-	OrderID         string `json:"orderId"`
-	MachineID       string `json:"machineId"`
-	DoorNo          int    `json:"doorNo"`
-	TranseType      int    `json:"transeType"`
-	CustomerDetails string `json:"customerDetails,omitempty"`
-	TimeSp          int64  `json:"timeSp"`
-	NotifyURL       string `json:"NotifyUrl"`
-	Remark          string `json:"remark,omitempty"`
+	OrderID         string     `json:"orderId"`
+	MachineID       string     `json:"machineId"`
+	DoorNo          int        `json:"doorNo"`
+	TranseType      TranseType `json:"transeType"`
+	CustomerDetails string     `json:"customerDetails,omitempty"`
+	TimeSp          int64      `json:"timeSp"`
+	NotifyURL       string     `json:"NotifyUrl"`
+	Remark          string     `json:"remark,omitempty"`
 }
 
 // RestockOpenDoorResponse represents restock door opening response
 type RestockOpenDoorResponse struct {
-	OrderID    string `json:"OrderId"`
-	TranseType int    `json:"TranseType"`
-	Action     string `json:"Action"`
-	Status     bool   `json:"Status"`
-	Msg        string `json:"Msg"`
-	Data       string `json:"Data"`
+	OrderID    string     `json:"OrderId"`
+	TranseType TranseType `json:"TranseType"`
+	Action     string     `json:"Action"`
+	Status     bool       `json:"Status"`
+	Msg        string     `json:"Msg"`
+	Data       string     `json:"Data"`
 }
 
 // OpenDoor opens the vending machine door

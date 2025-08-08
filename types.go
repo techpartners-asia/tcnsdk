@@ -96,11 +96,11 @@ type ConfirmRepliResponse struct {
 
 // ReportPaymentResultRequest represents payment result reporting request
 type ReportPaymentResultRequest struct {
-	OrderID      string `json:"OrderId"`
-	OrderNo      string `json:"OrderNo"`
-	PayType      int    `json:"PayType"`
-	PayStatus    int    `json:"PayStatus"`
-	ErrorMessage string `json:"ErrorMessage,omitempty"`
+	OrderID      string    `json:"OrderId"`
+	OrderNo      string    `json:"OrderNo"`
+	PayType      PayType   `json:"PayType"`
+	PayStatus    PayStatus `json:"PayStatus"`
+	ErrorMessage string    `json:"ErrorMessage,omitempty"`
 }
 
 // ReportPaymentResultResponse represents payment result reporting response
@@ -110,11 +110,233 @@ type ReportPaymentResultResponse struct {
 	Message string `json:"Message"`
 }
 
+// Constants for transaction types
+const (
+	TranseTypePurchase = 0
+	TranseTypeRestock  = 2
+)
+
+// TranseType represents transaction type
+type TranseType int
+
+// Constants for payment types
+const (
+	PayTypeNormal    = 0
+	PayTypeDeduction = 1
+	PayTypeRefund    = 2
+)
+
+// PayType represents payment type
+type PayType int
+
+// Constants for payment status
+const (
+	PayStatusSuccess = 1
+	PayStatusFailed  = 2
+)
+
+// PayStatus represents payment status
+type PayStatus int
+
+// Constants for trade process modes
+const (
+	TradeProcessModeNormal    = 0
+	TradeProcessModeCancel    = 1
+	TradeProcessModeInterrupt = 2
+)
+
+// TradeProcessMode represents trade process mode
+type TradeProcessMode int
+
+// Constants for meter types
+const (
+	MeterTypePiece  = 1
+	MeterTypeWeight = 2
+)
+
+// MeterType represents meter type
+type MeterType int
+
+// Visual Recognition SDK Types
+
+// CommodityConfirmRequest represents product confirmation request
+type CommodityConfirmRequest struct {
+	AppID        string `json:"AppID"`
+	CommoditySku string `json:"CommoditySku"`
+}
+
+// CommodityConfirmResponse represents product confirmation response
+type CommodityConfirmResponse struct {
+	Code int `json:"Code"`
+	Data struct {
+		CommodityName string `json:"CommodityName"`
+		CommodityId   string `json:"CommodityId"`
+		PictureUrl    string `json:"PictureUrl"`
+	} `json:"Data"`
+	Msg string `json:"Msg,omitempty"`
+}
+
+// ProductRegistrationRequest represents product registration request
+type ProductRegistrationRequest struct {
+	AppID      string   `json:"AppID"`
+	AskId      string   `json:"AskId"`
+	SkuName    string   `json:"SkuName"`
+	Sku        string   `json:"Sku,omitempty"`
+	IsStandard bool     `json:"IsStandard,omitempty"`
+	ImgUrls    []string `json:"ImgUrls"`
+	NotifyUrl  string   `json:"NotifyUrl"`
+}
+
+// ProductRegistrationResponse represents product registration response
+type ProductRegistrationResponse struct {
+	Code int `json:"Code"`
+	Data struct {
+		YsSkuId string `json:"YsSkuId"`
+	} `json:"Data"`
+	Msg string `json:"Msg,omitempty"`
+}
+
+// ProductReviewQueryRequest represents product review query request
+type ProductReviewQueryRequest struct {
+	AppID   string `json:"AppID"`
+	YsSkuId string `json:"YsSkuId"`
+}
+
+// ProductReviewQueryResponse represents product review query response
+type ProductReviewQueryResponse struct {
+	Code int `json:"Code"`
+	Data struct {
+		State RecognitionState `json:"State"`
+		Desc  string           `json:"Desc,omitempty"`
+	} `json:"Data"`
+	Msg string `json:"Msg,omitempty"`
+}
+
+// ProductReviewNotification represents product review notification
+type ProductReviewNotification struct {
+	AppID   string           `json:"AppID"`
+	YsSkuId string           `json:"YsSkuId"`
+	State   RecognitionState `json:"State"`
+	Desc    string           `json:"Desc,omitempty"`
+}
+
+// RecognitionRequest represents video recognition request
+type RecognitionRequest struct {
+	AppID        string       `json:"AppID"`
+	TaskId       string       `json:"TaskId"`
+	ResourceType ResourceType `json:"ResourceType,omitempty"`
+	ResourceUrl  []string     `json:"ResourceUrl"`
+	ProductRange []string     `json:"ProductRange"`
+	NotifyUrl    string       `json:"NotifyUrl"`
+	Weight       *Weight      `json:"Weight,omitempty"`
+}
+
+// Weight represents tray weight difference
+type Weight struct {
+	// Add weight-related fields as needed
+}
+
+// RecognitionResponse represents video recognition response
+type RecognitionResponse struct {
+	Code int `json:"Code"`
+	Data struct {
+		YsTaskId               string `json:"YsTaskId"`
+		RemainingServiceNumber int    `json:"RemainingServiceNumber"`
+	} `json:"Data"`
+	Msg string `json:"Msg,omitempty"`
+}
+
+// RecognitionCallback represents recognition callback data
+type RecognitionCallback struct {
+	State        RecognitionState        `json:"State"`
+	TaskId       string                  `json:"TaskId"`
+	YsTaskId     string                  `json:"YsTaskId"`
+	ResultStatus RecognitionResultStatus `json:"ResultStatus"`
+	ResultData   []RecognitionResultItem `json:"ResultData"`
+	VideoUrl     string                  `json:"VideoUrl"`
+}
+
+// RecognitionResultStatus represents recognition result status
+type RecognitionResultStatus struct {
+	Code RecognitionResultCode `json:"Code"`
+	Desc string                `json:"Desc"`
+}
+
+// RecognitionResultItem represents individual recognition result item
+type RecognitionResultItem struct {
+	CommoditySku string `json:"CommoditySku"`
+	Qty          int    `json:"Qty"`
+}
+
+// RecognitionResultQueryRequest represents recognition result query request
+type RecognitionResultQueryRequest struct {
+	AppID  string `json:"AppID"`
+	TaskId string `json:"TaskId"`
+}
+
+// RecognitionResultQueryResponse represents recognition result query response
+type RecognitionResultQueryResponse struct {
+	Code int                 `json:"Code"`
+	Data RecognitionCallback `json:"Data"`
+	Msg  string              `json:"Msg,omitempty"`
+}
+
+// RemainingQuotaResponse represents remaining recognition quota response
+type RemainingQuotaResponse struct {
+	Code int `json:"Code"`
+	Data struct {
+		Number int `json:"Number"`
+	} `json:"Data"`
+	Msg string `json:"Msg,omitempty"`
+}
+
+// Constants for recognition states
+const (
+	RecognitionStatePending   = 0
+	RecognitionStateReviewing = 1
+	RecognitionStateApproved  = 2
+	RecognitionStateRejected  = 3
+)
+
+// RecognitionState represents recognition state
+type RecognitionState int
+
+// Constants for recognition result status codes
+const (
+	RecognitionResultSuccess = 2
+)
+
+// RecognitionResultCode represents recognition result code
+type RecognitionResultCode int
+
+// Constants for resource types
+const (
+	ResourceTypeURL = 1
+	ResourceTypeID  = 2
+)
+
+// ResourceType represents resource type
+type ResourceType int
+
+// Constants for callback actions
+const (
+	CallbackActionPreOpenDoor     = "PreOpenDoor"
+	CallbackActionOpenedDoor      = "OpenedDoor"
+	CallbackActionCloseDoor       = "CloseDoor"
+	CallbackActionCancel          = "Cancel"
+	CallbackActionOrderDetected   = "OrderDetected"
+	CallbackActionOrderSettlement = "OrderSettlement"
+	CallbackActionOrderAdjustment = "OrderAdjustment"
+	CallbackActionOrderRefund     = "OrderRefund"
+	CallbackActionProductReview   = "ProductReview"
+	CallbackActionRecognition     = "Recognition"
+)
+
 // CallbackEvent represents callback event structure
 type CallbackEvent struct {
 	OrderID         string      `json:"OrderId"`
 	OrderNo         string      `json:"OrderNo"`
-	TranseType      int         `json:"TranseType"`
+	TranseType      TranseType  `json:"TranseType"`
 	Action          string      `json:"Action"`
 	Status          bool        `json:"Status"`
 	Msg             string      `json:"Msg"`
@@ -122,20 +344,124 @@ type CallbackEvent struct {
 	Data            interface{} `json:"Data"`
 }
 
+// OrderDetectedCallback represents OrderDetected callback event
+type OrderDetectedCallback struct {
+	OrderID    string            `json:"OrderId"`
+	OrderNo    string            `json:"OrderNo"`
+	TranseType TranseType        `json:"TranseType"`
+	OrgID      string            `json:"OrgId"`
+	Action     string            `json:"Action"`
+	Status     bool              `json:"Status"`
+	Msg        string            `json:"Msg"`
+	Data       DetectOrderDetail `json:"Data"`
+}
+
+// OpenedDoorCallback represents OpenedDoor callback event
+type OpenedDoorCallback struct {
+	OrderID         string     `json:"OrderId"`
+	OrderNo         string     `json:"OrderNo"`
+	TranseType      TranseType `json:"TranseType"`
+	Action          string     `json:"Action"`
+	Status          bool       `json:"Status"`
+	Msg             string     `json:"Msg"`
+	CustomerDetails string     `json:"CustomerDetails"`
+	Data            string     `json:"Data"`
+}
+
+// PreOpenDoorCallback represents PreOpenDoor callback event
+type PreOpenDoorCallback struct {
+	OrderID         string     `json:"OrderId"`
+	OrderNo         string     `json:"OrderNo"`
+	TranseType      TranseType `json:"TranseType"`
+	Action          string     `json:"Action"`
+	Status          bool       `json:"Status"`
+	Msg             string     `json:"Msg"`
+	CustomerDetails string     `json:"CustomerDetails"`
+	Data            string     `json:"Data"`
+}
+
+// CloseDoorCallback represents CloseDoor callback event
+type CloseDoorCallback struct {
+	OrderID         string     `json:"OrderId"`
+	OrderNo         string     `json:"OrderNo"`
+	TranseType      TranseType `json:"TranseType"`
+	Action          string     `json:"Action"`
+	Status          bool       `json:"Status"`
+	Msg             string     `json:"Msg"`
+	CustomerDetails string     `json:"CustomerDetails"`
+	Data            string     `json:"Data"`
+}
+
+// CancelCallback represents Cancel callback event
+type CancelCallback struct {
+	OrderID         string     `json:"OrderId"`
+	OrderNo         string     `json:"OrderNo"`
+	TranseType      TranseType `json:"TranseType"`
+	Action          string     `json:"Action"`
+	Status          bool       `json:"Status"`
+	Msg             string     `json:"Msg"`
+	CustomerDetails string     `json:"CustomerDetails"`
+	Data            string     `json:"Data"`
+}
+
+// OrderSettlementCallback represents OrderSettlement callback event
+type OrderSettlementCallback struct {
+	OrderID         string            `json:"OrderId"`
+	OrderNo         string            `json:"OrderNo"`
+	TranseType      TranseType        `json:"TranseType"`
+	Action          string            `json:"Action"`
+	Status          bool              `json:"Status"`
+	Msg             string            `json:"Msg"`
+	CustomerDetails string            `json:"CustomerDetails"`
+	Data            DetectOrderDetail `json:"Data"`
+}
+
+// OrderAdjustmentCallback represents OrderAdjustment callback event
+type OrderAdjustmentCallback struct {
+	OrderID         string          `json:"OrderId"`
+	OrderNo         string          `json:"OrderNo"`
+	TranseType      TranseType      `json:"TranseType"`
+	Action          string          `json:"Action"`
+	Status          bool            `json:"Status"`
+	Msg             string          `json:"Msg"`
+	CustomerDetails string          `json:"CustomerDetails"`
+	Data            OrderAdjustment `json:"Data"`
+}
+
+// OrderRefundCallback represents OrderRefund callback event
+type OrderRefundCallback struct {
+	OrderID         string      `json:"OrderId"`
+	OrderNo         string      `json:"OrderNo"`
+	TranseType      TranseType  `json:"TranseType"`
+	Action          string      `json:"Action"`
+	Status          bool        `json:"Status"`
+	Msg             string      `json:"Msg"`
+	CustomerDetails string      `json:"CustomerDetails"`
+	Data            OrderRefund `json:"Data"`
+}
+
+// ProductReviewNotificationCallback represents product review notification callback
+type ProductReviewNotificationCallback struct {
+	AppID   string           `json:"AppID"`
+	YsSkuId string           `json:"YsSkuId"`
+	State   RecognitionState `json:"State"`
+	Desc    string           `json:"Desc,omitempty"`
+}
+
 // DetectOrderDetail represents order detection details
 type DetectOrderDetail struct {
-	TradeProcessMode   int                 `json:"TradeProcessMode"`
+	TradeProcessMode   TradeProcessMode    `json:"TradeProcessMode"`
 	TradeProductModels []TradeProductModel `json:"TradeProductModels"`
 }
 
 // TradeProductModel represents product model in detection
 type TradeProductModel struct {
-	ID         string  `json:"Id"`
-	AlisName   string  `json:"AlisName"`
-	BuyCount   int     `json:"BuyCount"`
-	MeterType  int     `json:"MeterType"`
-	Price      float64 `json:"Price"`
-	PictureURL string  `json:"PictureUrl,omitempty"`
+	ID         string    `json:"Id"`
+	AlisName   string    `json:"AlisName"`
+	BuyCount   int       `json:"BuyCount"`
+	MeterType  MeterType `json:"MeterType"`
+	Price      float64   `json:"Price"`
+	PictureURL string    `json:"PictureUrl,omitempty"`
 }
 
 // OrderAdjustment represents order adjustment data
@@ -150,35 +476,3 @@ type OrderRefund struct {
 	RefundOrderNo       string              `json:"Refund Order No"`
 	OrderRefundProducts []TradeProductModel `json:"OrderRefundProducts"`
 }
-
-// Constants for transaction types
-const (
-	TranseTypePurchase = 0
-	TranseTypeRestock  = 2
-)
-
-// Constants for payment types
-const (
-	PayTypeNormal    = 0
-	PayTypeDeduction = 1
-	PayTypeRefund    = 2
-)
-
-// Constants for payment status
-const (
-	PayStatusSuccess = 1
-	PayStatusFailed  = 2
-)
-
-// Constants for trade process modes
-const (
-	TradeProcessModeNormal    = 0
-	TradeProcessModeCancel    = 1
-	TradeProcessModeInterrupt = 2
-)
-
-// Constants for meter types
-const (
-	MeterTypePiece  = 1
-	MeterTypeWeight = 2
-)

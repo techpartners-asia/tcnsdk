@@ -119,7 +119,7 @@ type Product struct {
 	SupportTypeName   string    `json:"supportTypeName"`
 }
 
-type ListCheckProductTrainRequest struct {
+type ListProductTrainRequest struct {
 	PageIndex   uint   `json:"pageIndex"`
 	PageSize    uint   `json:"pageSize"`
 	Sku         string `json:"sku"`
@@ -128,18 +128,18 @@ type ListCheckProductTrainRequest struct {
 	State       State  `json:"state"`
 }
 
-type ListCheckProductTrainResponse struct {
+type ListProductTrainResponse struct {
 	BaseResponse
 	Data struct {
-		Total     uint                `json:"total"`
-		PageSize  uint                `json:"pageSize"`
-		PageIndex uint                `json:"pageIndex"`
-		Message   string              `json:"message"`
-		Items     []CheckProductTrain `json:"items"`
+		Total     uint           `json:"total"`
+		PageSize  uint           `json:"pageSize"`
+		PageIndex uint           `json:"pageIndex"`
+		Message   string         `json:"message"`
+		Items     []ProductTrain `json:"items"`
 	} `json:"data"`
 }
 
-type CheckProductTrain struct {
+type ProductTrain struct {
 	Product
 	State           State    `json:"state"`
 	RejectCause     string   `json:"rejectCause"`

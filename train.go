@@ -27,15 +27,15 @@ func (s *TrainService) TrainProduct(ctx context.Context, req *ProductTrainReques
 	return &resp, nil
 }
 
-func (s *TrainService) ListCheckProductTrain(ctx context.Context, req *ListCheckProductTrainRequest) (*ListCheckProductTrainResponse, error) {
-	var resp ListCheckProductTrainResponse
+func (s *TrainService) ListProductTrainRequest(ctx context.Context, req *ListProductTrainRequest) (*ListProductTrainResponse, error) {
+	var resp ListProductTrainResponse
 	_, err := s.client.request(ctx).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/CommodityApply/Record")
 
 	if err != nil {
-		return nil, fmt.Errorf("failed to list check product train: %w", err)
+		return nil, fmt.Errorf("failed to list product train request: %w", err)
 	}
 
 	return &resp, nil

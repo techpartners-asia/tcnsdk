@@ -1,4 +1,4 @@
-package tcnsdk
+package structs
 
 type ListSlotRequest struct {
 	VendID string `json:"vendId"`

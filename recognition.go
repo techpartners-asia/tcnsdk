@@ -3,6 +3,8 @@ package tcnsdk
 import (
 	"context"
 	"fmt"
+
+	"github.com/techpartners-asia/tcnsdk/structs"
 )
 
 // RecognitionService handles visual recognition operations
@@ -11,9 +13,9 @@ type RecognitionService struct {
 }
 
 // ConfirmCommodity queries cloud product inventory
-func (s *RecognitionService) ConfirmCommodity(ctx context.Context, req *CommodityConfirmRequest) (*CommodityConfirmResponse, error) {
-	var resp CommodityConfirmResponse
-	_, err := s.client.request(ctx).
+func (s *RecognitionService) ConfirmCommodity(ctx context.Context, req *structs.CommodityConfirmRequest) (*structs.CommodityConfirmResponse, error) {
+	var resp structs.CommodityConfirmResponse
+	_, err := s.client.Request(ctx).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/CommodityConfirm")
@@ -26,9 +28,9 @@ func (s *RecognitionService) ConfirmCommodity(ctx context.Context, req *Commodit
 }
 
 // RegisterProduct registers a new product for recognition
-func (s *RecognitionService) RegisterProduct(ctx context.Context, req *ProductRegistrationRequest) (*ProductRegistrationResponse, error) {
-	var resp ProductRegistrationResponse
-	_, err := s.client.request(ctx).
+func (s *RecognitionService) RegisterProduct(ctx context.Context, req *structs.ProductRegistrationRequest) (*structs.ProductRegistrationResponse, error) {
+	var resp structs.ProductRegistrationResponse
+	_, err := s.client.Request(ctx).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/Commodity/Apply")
@@ -41,9 +43,9 @@ func (s *RecognitionService) RegisterProduct(ctx context.Context, req *ProductRe
 }
 
 // QueryProductReview queries the status of a product review
-func (s *RecognitionService) QueryProductReview(ctx context.Context, req *ProductReviewQueryRequest) (*ProductReviewQueryResponse, error) {
-	var resp ProductReviewQueryResponse
-	_, err := s.client.request(ctx).
+func (s *RecognitionService) QueryProductReview(ctx context.Context, req *structs.ProductReviewQueryRequest) (*structs.ProductReviewQueryResponse, error) {
+	var resp structs.ProductReviewQueryResponse
+	_, err := s.client.Request(ctx).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/Commodity/ApplyQuery")
@@ -56,9 +58,9 @@ func (s *RecognitionService) QueryProductReview(ctx context.Context, req *Produc
 }
 
 // SubmitRecognition submits a video for recognition
-func (s *RecognitionService) SubmitRecognition(ctx context.Context, req *RecognitionRequest) (*RecognitionResponse, error) {
-	var resp RecognitionResponse
-	_, err := s.client.request(ctx).
+func (s *RecognitionService) SubmitRecognition(ctx context.Context, req *structs.RecognitionRequest) (*structs.RecognitionResponse, error) {
+	var resp structs.RecognitionResponse
+	_, err := s.client.Request(ctx).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/PushVideoAsk")
@@ -73,10 +75,10 @@ func (s *RecognitionService) SubmitRecognition(ctx context.Context, req *Recogni
 // QueryRecognitionResult queries the result of a recognition task
 func (s *RecognitionService) QueryRecognitionResult(
 	ctx context.Context,
-	req *RecognitionResultQueryRequest,
-) (*RecognitionResultQueryResponse, error) {
-	var resp RecognitionResultQueryResponse
-	_, err := s.client.request(ctx).
+	req *structs.RecognitionResultQueryRequest,
+) (*structs.RecognitionResultQueryResponse, error) {
+	var resp structs.RecognitionResultQueryResponse
+	_, err := s.client.Request(ctx).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/VideoAskResult")
@@ -89,9 +91,9 @@ func (s *RecognitionService) QueryRecognitionResult(
 }
 
 // GetRemainingQuota gets the remaining recognition quota
-func (s *RecognitionService) GetRemainingQuota(ctx context.Context, appID string) (*RemainingQuotaResponse, error) {
-	var resp RemainingQuotaResponse
-	_, err := s.client.request(ctx).
+func (s *RecognitionService) GetRemainingQuota(ctx context.Context, appID string) (*structs.RemainingQuotaResponse, error) {
+	var resp structs.RemainingQuotaResponse
+	_, err := s.client.Request(ctx).
 		SetResult(&resp).
 		Post(fmt.Sprintf("/OpenApi/GetVideoAskServiceNumber/%s", appID))
 

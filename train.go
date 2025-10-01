@@ -3,6 +3,8 @@ package tcnsdk
 import (
 	"context"
 	"fmt"
+
+	"github.com/techpartners-asia/tcnsdk/structs"
 )
 
 type TrainService struct {
@@ -13,9 +15,9 @@ func NewTrainService(client *Client) *TrainService {
 	return &TrainService{client: client}
 }
 
-func (s *TrainService) TrainProduct(ctx context.Context, req *ProductTrainRequest) (*ProductTrainResponse, error) {
-	var resp ProductTrainResponse
-	_, err := s.client.request(ctx).
+func (s *TrainService) TrainProduct(ctx context.Context, req *structs.ProductTrainRequest) (*structs.ProductTrainResponse, error) {
+	var resp structs.ProductTrainResponse
+	_, err := s.client.Request(ctx).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/PutNewCommodity")
@@ -27,9 +29,9 @@ func (s *TrainService) TrainProduct(ctx context.Context, req *ProductTrainReques
 	return &resp, nil
 }
 
-func (s *TrainService) ListProductTrainRequest(ctx context.Context, req *ListProductTrainRequest) (*ListProductTrainResponse, error) {
-	var resp ListProductTrainResponse
-	_, err := s.client.request(ctx).
+func (s *TrainService) ListProductTrainRequest(ctx context.Context, req *structs.ListProductTrainRequest) (*structs.ListProductTrainResponse, error) {
+	var resp structs.ListProductTrainResponse
+	_, err := s.client.Request(ctx).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/CommodityApply/Record")

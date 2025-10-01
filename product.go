@@ -3,6 +3,8 @@ package tcnsdk
 import (
 	"context"
 	"fmt"
+
+	"github.com/techpartners-asia/tcnsdk/structs"
 )
 
 type ProductService struct {
@@ -15,12 +17,18 @@ func NewProductService(client *Client) *ProductService {
 }
 
 // GetProduct returns a product by ID
-func (s *ProductService) ListProducts(ctx context.Context, req *ProductListRequest) (*ProductListResponse, error) {
-	var resp ProductListResponse
-	_, err := s.client.request(ctx).
-		SetBody(req).
+func (s *ProductService) ListProducts(ctx context.Context, req *structs.ProductListRequest) (*structs.ProductListResponse, error) {
+	var resp structs.ProductListResponse
+	_, err := s.client.Request(ctx).
+		SetQueryParams(map[string]string{
+			"pageIndex":     fmt.Sprintf("%d", req.PageIndex),
+			"pageSize":      fmt.Sprintf("%d", req.PageSize),
+			"name":          req.Name,
+			"commodityType": req.CommodityType,
+			"supportType":   req.SupportType,
+		}).
 		SetResult(&resp).
-		Post("/OpenApi/CustomerCommoditys")
+		Get("/OpenApi/CustomerCommoditys")
 
 	if err != nil {
 		return nil, fmt.Errorf("failed to list products: %w", err)
@@ -29,9 +37,9 @@ func (s *ProductService) ListProducts(ctx context.Context, req *ProductListReque
 	return &resp, nil
 }
 
-func (s *ProductService) UpdateProduct(ctx context.Context, req *ProductUpdateRequest) (*ProductUpdateResponse, error) {
-	var resp ProductUpdateResponse
-	_, err := s.client.request(ctx).
+func (s *ProductService) UpdateProduct(ctx context.Context, req *structs.ProductUpdateRequest) (*structs.ProductUpdateResponse, error) {
+	var resp structs.ProductUpdateResponse
+	_, err := s.client.Request(ctx).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/CustomerCommoditys/Update")

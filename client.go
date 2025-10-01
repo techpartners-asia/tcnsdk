@@ -5,6 +5,8 @@ import (
 	"time"
 
 	"resty.dev/v3"
+
+	"github.com/techpartners-asia/tcnsdk/structs"
 )
 
 // Client represents the SAAS API client
@@ -56,8 +58,8 @@ func NewClient(config *Config) *Client {
 	}
 
 	// Initialize services
-	c.Machine = &MachineService{client: c}
-	c.Order = &OrderService{client: c}
+	c.Machine = &MachineService{Client: c}
+	c.Order = &OrderService{Client: c}
 	c.Recognition = &RecognitionService{client: c}
 	c.Product = &ProductService{client: c}
 	c.Train = &TrainService{client: c}
@@ -67,13 +69,13 @@ func NewClient(config *Config) *Client {
 
 // getAuthToken retrieves authentication token
 func (c *Client) getAuthToken(ctx context.Context) (string, error) {
-	authReq := &AuthRequest{
+	authReq := &structs.AuthRequest{
 		AppID:  c.config.AppID,
 		Key:    c.config.Key,
 		Secret: c.config.Secret,
 	}
 
-	var authResp AuthResponse
+	var authResp structs.AuthResponse
 	_, err := c.client.R().
 		SetContext(ctx).
 		SetBody(authReq).
@@ -87,8 +89,8 @@ func (c *Client) getAuthToken(ctx context.Context) (string, error) {
 	return authResp.Token, nil
 }
 
-// request performs an authenticated request
-func (c *Client) request(ctx context.Context) *resty.Request {
+// Request performs an authenticated request
+func (c *Client) Request(ctx context.Context) *resty.Request {
 	token, err := c.getAuthToken(ctx)
 	if err != nil {
 		// Return request without auth if token retrieval fails

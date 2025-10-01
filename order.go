@@ -4,21 +4,24 @@ import (
 	"context"
 	"fmt"
 	"time"
+
+	"github.com/techpartners-asia/tcnsdk/structs"
 )
 
 // OrderService handles order-related operations
 type OrderService struct {
-	client *Client
+	Client *Client
 }
 
 // OpenDoor opens the vending machine door
-func (s *OrderService) OpenDoor(ctx context.Context, req *OpenDoorRequest) (*OpenDoorResponse, error) {
+// [stable] [tested]
+func (s *OrderService) OpenDoor(ctx context.Context, req *structs.OpenDoorRequest) (*structs.OpenDoorResponse, error) {
 	if req.TimeSp == 0 {
 		req.TimeSp = time.Now().Unix()
 	}
 
-	var resp OpenDoorResponse
-	_, err := s.client.request(ctx).
+	var resp structs.OpenDoorResponse
+	_, err := s.Client.Request(ctx).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/Order/OpenDoor")
@@ -31,13 +34,13 @@ func (s *OrderService) OpenDoor(ctx context.Context, req *OpenDoorRequest) (*Ope
 }
 
 // RestockOpenDoor opens the door for restocking (testing endpoint)
-func (s *OrderService) RestockOpenDoor(ctx context.Context, req *RestockOpenDoorRequest) (*RestockOpenDoorResponse, error) {
+func (s *OrderService) RestockOpenDoor(ctx context.Context, req *structs.RestockOpenDoorRequest) (*structs.RestockOpenDoorResponse, error) {
 	if req.TimeSp == 0 {
 		req.TimeSp = time.Now().Unix()
 	}
 
-	var resp RestockOpenDoorResponse
-	_, err := s.client.request(ctx).
+	var resp structs.RestockOpenDoorResponse
+	_, err := s.Client.Request(ctx).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/Repli/OpenDoorMethod")
@@ -48,33 +51,3 @@ func (s *OrderService) RestockOpenDoor(ctx context.Context, req *RestockOpenDoor
 
 	return &resp, nil
 }
-
-// // ReportPaymentResult reports the payment result
-// func (s *OrderService) ReportPaymentResult(ctx context.Context, req *ReportPaymentResultRequest) (*ReportPaymentResultResponse, error) {
-// 	var resp ReportPaymentResultResponse
-// 	_, err := s.client.request(ctx).
-// 		SetBody(req).
-// 		SetResult(&resp).
-// 		Post("/OpenApi/Order/ReportPaymentResult")
-
-// 	if err != nil {
-// 		return nil, fmt.Errorf("failed to report payment result: %w", err)
-// 	}
-
-// 	return &resp, nil
-// }
-
-// // ConfirmReplenishment confirms replenishment data
-// func (s *OrderService) ConfirmReplenishment(ctx context.Context, req *ConfirmRepliRequest) (*ConfirmRepliResponse, error) {
-// 	var resp ConfirmRepliResponse
-// 	_, err := s.client.request(ctx).
-// 		SetBody(req).
-// 		SetResult(&resp).
-// 		Post("/OpenApi/Repli/Confirm")
-
-// 	if err != nil {
-// 		return nil, fmt.Errorf("failed to confirm replenishment: %w", err)
-// 	}
-
-// 	return &resp, nil
-// }

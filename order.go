@@ -51,3 +51,18 @@ func (s *OrderService) RestockOpenDoor(ctx context.Context, req *structs.Restock
 
 	return &resp, nil
 }
+
+// RestockOpenDoor opens the door for restocking (testing endpoint)
+func (s *OrderService) OrderDetail(ctx context.Context, transID string) (*structs.OrderDetailResponse, error) {
+	var resp structs.OrderDetailResponse
+	_, err := s.Client.Request(ctx).
+		SetPathParam("transID", transID).
+		SetResult(&resp).
+		Get("/OpenApi/Order/{transID}/Detail")
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to get order detail: %w", err)
+	}
+
+	return &resp, nil
+}

@@ -1,5 +1,7 @@
 package structs
 
+import "time"
+
 type ListSlotRequest struct {
 	VendID string `json:"vendId"`
 }
@@ -712,6 +714,7 @@ type OrderRefund struct {
 }
 
 // OpenDoorRequest represents door opening request
+
 type OpenDoorRequest struct {
 	OrderID         string     `json:"orderId"`
 	MachineID       string     `json:"machineId"`
@@ -753,4 +756,23 @@ type RestockOpenDoorResponse struct {
 	Status     bool       `json:"Status"`
 	Msg        string     `json:"Msg"`
 	Data       string     `json:"Data"`
+}
+
+type OrderDetailResponse struct {
+	StatusCode int       `json:"statusCode"`
+	Data       OrderData `json:"data"`
+	Succeeded  bool      `json:"succeeded"`
+	Errors     *string   `json:"errors"` // can be nil or structured
+	Extras     *string   `json:"extras"` // can be nil or structured
+	Timestamp  int64     `json:"timestamp"`
+}
+
+type OrderData struct {
+	OrderID       string            `json:"orderId"`
+	CreateTime    time.Time         `json:"createTime"`
+	OpenDoorTime  time.Time         `json:"openDoorTime"`
+	CloseDoorTime time.Time         `json:"closeDoorTime"`
+	DetectResult  DetectOrderDetail `json:"detectResult"` // can be null or structured
+	Detected      bool              `json:"detected"`
+	State         int               `json:"state"` // 1: In progress, 4: Completed, 8: Cancelled
 }

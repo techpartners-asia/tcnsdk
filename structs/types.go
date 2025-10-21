@@ -2,9 +2,116 @@ package structs
 
 import "time"
 
+// / REQUESTS
+// AuthRequest represents authentication request
+type AuthRequest struct {
+	AppID  string `json:"appID"`
+	Key    string `json:"key"`
+	Secret string `json:"secret"`
+}
+
+type OpenDoorRequest struct {
+	OrderID         string     `json:"orderId"`
+	MachineID       string     `json:"machineId"`
+	DoorNo          int        `json:"doorNo"`
+	TranseType      TranseType `json:"transeType"`
+	CustomerDetails string     `json:"customerDetails,omitempty"`
+	TimeSp          int64      `json:"timeSp"`
+	NotifyURL       string     `json:"NotifyUrl"`
+	Remark          string     `json:"remark,omitempty"`
+}
+
+type RestockOpenDoorRequest struct {
+	OrderID         string     `json:"orderId"`
+	MachineID       string     `json:"machineId"`
+	DoorNo          int        `json:"doorNo"`
+	TranseType      TranseType `json:"transeType"`
+	CustomerDetails string     `json:"customerDetails,omitempty"`
+	TimeSp          int64      `json:"timeSp"`
+	NotifyURL       string     `json:"NotifyUrl"`
+	Remark          string     `json:"remark,omitempty"`
+}
+
+type TrainResultListRequest struct {
+	PageIndex   uint   `json:"pageIndex"`
+	PageSize    uint   `json:"pageSize"`
+	RecordID    string `json:"recordId"`
+	CommodityID string `json:"commodityId"`
+	Sku         string `json:"sku"`
+	State       State  `json:"state"`
+}
+
+type ProductTrainRequest struct {
+	Sku               string  `json:"sku"`
+	Name              string  `json:"name"`
+	Price             float64 `json:"price"`
+	PictureURL        string  `json:"pictureUrl"`
+	BackImage         string  `json:"backImage"`
+	ProfileImage      string  `json:"profileImage"`
+	TopOrBottomImage  string  `json:"topOrBottomImage"`
+	PictureUrl_Bottom string  `json:"pictureUrl_bottom"`
+	PictureUrl_Other  string  `json:"pictureUrl_other"`
+	Weight            float64 `json:"weight"`
+	Packing           string  `json:"packing"`
+}
+
 type ListSlotRequest struct {
 	VendID string `json:"vendId"`
 }
+type ListProductTrainRequest struct {
+	PageIndex   uint   `json:"pageIndex"`
+	PageSize    uint   `json:"pageSize"`
+	Sku         string `json:"sku"`
+	RecordID    string `json:"recordId"`
+	CommodityID string `json:"commodityId"`
+	State       State  `json:"state"`
+}
+
+type ProductUpdateRequest struct {
+	ID             string  `json:"id"`
+	Name           string  `json:"name"`
+	PictureUrl     string  `json:"pictureUrl"`
+	Weight         float64 `json:"weight"`
+	Price          float64 `json:"price"`
+	CostPrice      float64 `json:"costPrice"`
+	SyncAllMachine bool    `json:"syncAllMachine"`
+}
+
+type UpdateProductOnMachineRequest struct {
+	InvSlot         []InvSlot `json:"invslot"`
+	VendID          string    `json:"vendId"`
+	DoorNo          int       `json:"doorNo"`
+	Price           float64   `json:"price"`
+	EarlyWaringRate bool      `json:"earlyrate"`
+	EarlyWarigCount int       `json:"earlywarigcount"`
+	Capacity        int       `json:"capacity"`
+	LayerNo         int       `json:"layerNo"`
+}
+
+type DeleteProductFromMachineRequest struct {
+	VendInventedSlotIds []int  `json:"vendInventedSlotIds"`
+	VendID              string `json:"vendId"`
+}
+
+type ProductListRequest struct {
+	PageIndex     uint   `json:"pageIndex"`
+	PageSize      uint   `json:"pageSize"`
+	Name          string `json:"name"`
+	CommodityType string `json:"commodityType"`
+	SupportType   string `json:"supportType"`
+}
+type AddProductToMachineRequest struct {
+	VendID          string  `json:"vendId"`
+	CommodityID     string  `json:"commodityId"`
+	LayerNo         int     `json:"layerNo"`
+	DoorNo          int     `json:"doorNo"`
+	Capacity        int     `json:"capacity"`
+	EarlyRate       bool    `json:"earlyrate"`
+	EarlyWarigCount int     `json:"earlywarigcount"`
+	Price           float64 `json:"price"`
+}
+
+// / RESPONSES
 type ListSlotResponse struct {
 	BaseResponse
 	Data struct {
@@ -12,6 +119,7 @@ type ListSlotResponse struct {
 	} `json:"data"`
 }
 
+// / STRUCTS
 type Counter struct {
 	DoorNo            int     `json:"doorNo"`
 	DoorName          string  `json:"doorName"`
@@ -26,38 +134,11 @@ type Layer struct {
 	CommodityInfo []Commodity `json:"commodityInfo"`
 }
 
-type AddProductToMachineRequest struct {
-	VendID          string  `json:"vendId"`
-	CommodityID     string  `json:"commodityId"`
-	LayerNo         int     `json:"layerNo"`
-	DoorNo          int     `json:"doorNo"`
-	Capacity        int     `json:"capacity"`
-	EarlyRate       bool    `json:"earlyrate"`
-	EarlyWarigCount int     `json:"earlywarigcount"`
-	Price           float64 `json:"price"`
-}
-
 type AddProductToMachineResponse struct {
 	BaseResponse
 }
-
-type DeleteProductFromMachineRequest struct {
-	VendInventedSlotIds []int  `json:"vendInventedSlotIds"`
-	VendID              string `json:"vendId"`
-}
 type DeleteProductFromMachineResponse struct {
 	BaseResponse
-}
-
-type UpdateProductOnMachineRequest struct {
-	InvSlot         []InvSlot `json:"invslot"`
-	VendID          string    `json:"vendId"`
-	DoorNo          int       `json:"doorNo"`
-	Price           float64   `json:"price"`
-	EarlyWaringRate bool      `json:"earlyrate"`
-	EarlyWarigCount int       `json:"earlywarigcount"`
-	Capacity        int       `json:"capacity"`
-	LayerNo         int       `json:"layerNo"`
 }
 
 type InvSlot struct {
@@ -67,26 +148,8 @@ type UpdateProductOnMachineResponse struct {
 	BaseResponse
 }
 
-type ProductUpdateRequest struct {
-	ID             string  `json:"id"`
-	Name           string  `json:"name"`
-	PictureUrl     string  `json:"pictureUrl"`
-	Weight         float64 `json:"weight"`
-	Price          float64 `json:"price"`
-	CostPrice      float64 `json:"costPrice"`
-	SyncAllMachine bool    `json:"syncAllMachine"`
-}
-
 type ProductUpdateResponse struct {
 	BaseResponse
-}
-
-type ProductListRequest struct {
-	PageIndex     uint   `json:"pageIndex"`
-	PageSize      uint   `json:"pageSize"`
-	Name          string `json:"name"`
-	CommodityType string `json:"commodityType"`
-	SupportType   string `json:"supportType"`
 }
 
 type ProductListResponse struct {
@@ -119,15 +182,6 @@ type Product struct {
 	SupportType       []string  `json:"supportType"`
 	WeightFloatValue  float64   `json:"weightFloatValue"`
 	SupportTypeName   string    `json:"supportTypeName"`
-}
-
-type ListProductTrainRequest struct {
-	PageIndex   uint   `json:"pageIndex"`
-	PageSize    uint   `json:"pageSize"`
-	Sku         string `json:"sku"`
-	RecordID    string `json:"recordId"`
-	CommodityID string `json:"commodityId"`
-	State       State  `json:"state"`
 }
 
 type ListProductTrainResponse struct {
@@ -163,39 +217,9 @@ const (
 	StateRejected State = 3
 )
 
-type ProductTrainRequest struct {
-	Sku               string  `json:"sku"`
-	Name              string  `json:"name"`
-	Price             float64 `json:"price"`
-	PictureURL        string  `json:"pictureUrl"`
-	BackImage         string  `json:"backImage"`
-	ProfileImage      string  `json:"profileImage"`
-	TopOrBottomImage  string  `json:"topOrBottomImage"`
-	PictureUrl_Bottom string  `json:"pictureUrl_bottom"`
-	PictureUrl_Other  string  `json:"pictureUrl_other"`
-	Weight            float64 `json:"weight"`
-	Packing           string  `json:"packing"`
-}
-
 type ProductTrainResponse struct {
 	BaseResponse
 	Data string `json:"data"` //if its not empty, it means the product is undergoing review, otherwise it's already exists
-}
-
-type TrainResultListRequest struct {
-	PageIndex   uint   `json:"pageIndex"`
-	PageSize    uint   `json:"pageSize"`
-	RecordID    string `json:"recordId"`
-	CommodityID string `json:"commodityId"`
-	Sku         string `json:"sku"`
-	State       State  `json:"state"`
-}
-
-// AuthRequest represents authentication request
-type AuthRequest struct {
-	AppID  string `json:"appID"`
-	Key    string `json:"key"`
-	Secret string `json:"secret"`
 }
 
 // AuthResponse represents authentication response
@@ -720,19 +744,6 @@ type OrderRefund struct {
 	OrderRefundProducts []TradeProductModel `json:"OrderRefundProducts"`
 }
 
-// OpenDoorRequest represents door opening request
-
-type OpenDoorRequest struct {
-	OrderID         string     `json:"orderId"`
-	MachineID       string     `json:"machineId"`
-	DoorNo          int        `json:"doorNo"`
-	TranseType      TranseType `json:"transeType"`
-	CustomerDetails string     `json:"customerDetails,omitempty"`
-	TimeSp          int64      `json:"timeSp"`
-	NotifyURL       string     `json:"NotifyUrl"`
-	Remark          string     `json:"remark,omitempty"`
-}
-
 // OpenDoorResponse represents door opening response
 type OpenDoorData struct {
 	OrderID         string         `json:"orderId"`
@@ -747,17 +758,6 @@ type OpenDoorData struct {
 type OpenDoorResponse struct {
 	BaseResponse
 	Data OpenDoorData `json:"data"`
-}
-
-type RestockOpenDoorRequest struct {
-	OrderID         string     `json:"orderId"`
-	MachineID       string     `json:"machineId"`
-	DoorNo          int        `json:"doorNo"`
-	TranseType      TranseType `json:"transeType"`
-	CustomerDetails string     `json:"customerDetails,omitempty"`
-	TimeSp          int64      `json:"timeSp"`
-	NotifyURL       string     `json:"NotifyUrl"`
-	Remark          string     `json:"remark,omitempty"`
 }
 
 // RestockOpenDoorRequest represents restock door opening request

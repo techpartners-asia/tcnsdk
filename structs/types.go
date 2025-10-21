@@ -734,7 +734,7 @@ type OpenDoorRequest struct {
 }
 
 // OpenDoorResponse represents door opening response
-type OpenDoorResponse struct {
+type OpenDoorData struct {
 	OrderID         string         `json:"orderId"`
 	TranseType      TranseType     `json:"transeType"`
 	Action          CallbackAction `json:"action"`
@@ -744,8 +744,24 @@ type OpenDoorResponse struct {
 	CustomerDetails string         `json:"customerDetails"`
 }
 
-// RestockOpenDoorRequest represents restock door opening request
+type OpenDoorResponse struct {
+	BaseResponse
+	Data OpenDoorData `json:"data"`
+}
+
 type RestockOpenDoorRequest struct {
+	OrderID         string     `json:"orderId"`
+	MachineID       string     `json:"machineId"`
+	DoorNo          int        `json:"doorNo"`
+	TranseType      TranseType `json:"transeType"`
+	CustomerDetails string     `json:"customerDetails,omitempty"`
+	TimeSp          int64      `json:"timeSp"`
+	NotifyURL       string     `json:"NotifyUrl"`
+	Remark          string     `json:"remark,omitempty"`
+}
+
+// RestockOpenDoorRequest represents restock door opening request
+type RestockOpenDoorData struct {
 	OrderID         string     `json:"orderId"`
 	MachineID       string     `json:"machineId"`
 	DoorNo          int        `json:"doorNo"`
@@ -758,21 +774,13 @@ type RestockOpenDoorRequest struct {
 
 // RestockOpenDoorResponse represents restock door opening response
 type RestockOpenDoorResponse struct {
-	OrderID    string     `json:"OrderId"`
-	TranseType TranseType `json:"TranseType"`
-	Action     string     `json:"Action"`
-	Status     bool       `json:"Status"`
-	Msg        string     `json:"Msg"`
-	Data       string     `json:"Data"`
+	BaseResponse
+	Data RestockOpenDoorData `json:"data"`
 }
 
 type OrderDetailResponse struct {
-	StatusCode int       `json:"statusCode"`
-	Data       OrderData `json:"data"`
-	Succeeded  bool      `json:"succeeded"`
-	Errors     *string   `json:"errors"` // can be nil or structured
-	Extras     *string   `json:"extras"` // can be nil or structured
-	Timestamp  int64     `json:"timestamp"`
+	BaseResponse
+	Data OrderData `json:"data"`
 }
 
 type OrderData struct {

@@ -1,7 +1,6 @@
 package tcnsdk
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/techpartners-asia/tcnsdk/structs"
@@ -17,9 +16,9 @@ func NewProductService(client *Client) *ProductService {
 }
 
 // GetProduct returns a product by ID
-func (s *ProductService) ListProducts(ctx context.Context, req *structs.ProductListRequest) (*structs.ProductListResponse, error) {
+func (s *ProductService) ListProducts(req *structs.ProductListRequest) (*structs.ProductListResponse, error) {
 	var resp structs.ProductListResponse
-	_, err := s.client.Request(ctx).
+	_, err := s.client.Request().
 		SetQueryParams(map[string]string{
 			"pageIndex":     fmt.Sprintf("%d", req.PageIndex),
 			"pageSize":      fmt.Sprintf("%d", req.PageSize),
@@ -37,9 +36,9 @@ func (s *ProductService) ListProducts(ctx context.Context, req *structs.ProductL
 	return &resp, nil
 }
 
-func (s *ProductService) UpdateProduct(ctx context.Context, req *structs.ProductUpdateRequest) (*structs.ProductUpdateResponse, error) {
+func (s *ProductService) UpdateProduct(req *structs.ProductUpdateRequest) (*structs.ProductUpdateResponse, error) {
 	var resp structs.ProductUpdateResponse
-	_, err := s.client.Request(ctx).
+	_, err := s.client.Request().
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/CustomerCommoditys/Update")

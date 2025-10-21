@@ -1,7 +1,6 @@
 package tcnsdk
 
 import (
-	"context"
 	"time"
 
 	"resty.dev/v3"
@@ -66,7 +65,7 @@ func NewClient(config *Config) *Client {
 }
 
 // getAuthToken retrieves authentication token
-func (c *Client) getAuthToken(ctx context.Context) (string, error) {
+func (c *Client) getAuthToken() (string, error) {
 	authReq := &structs.AuthRequest{
 		AppID:  c.config.AppID,
 		Key:    c.config.Key,
@@ -75,7 +74,6 @@ func (c *Client) getAuthToken(ctx context.Context) (string, error) {
 
 	var authResp structs.AuthResponse
 	_, err := c.client.R().
-		SetContext(ctx).
 		SetBody(authReq).
 		SetResult(&authResp).
 		Post("/OpenApi/Login")
@@ -88,16 +86,15 @@ func (c *Client) getAuthToken(ctx context.Context) (string, error) {
 }
 
 // Request performs an authenticated request
-func (c *Client) Request(ctx context.Context) *resty.Request {
-	token, err := c.getAuthToken(ctx)
+func (c *Client) Request() *resty.Request {
+	token, err := c.getAuthToken()
 	if err != nil {
 		// Return request without auth if token retrieval fails
-		return c.client.R().SetContext(ctx)
+		return c.client.R()
 	}
 
 	return c.client.R().
-		SetContext(ctx).
-		SetHeader("Authorization", "Bearer "+token)
+		SetHeader("Authorization", token)
 }
 
 // Close closes the client and releases resources

@@ -21,7 +21,7 @@ func (s *OrderService) OpenDoor(ctx context.Context, req *structs.OpenDoorReques
 	}
 
 	var resp structs.OpenDoorResponse
-	_, err := s.Client.Request(ctx).
+	_, err := s.Client.Request().
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/Order/OpenDoor")
@@ -40,7 +40,7 @@ func (s *OrderService) RestockOpenDoor(ctx context.Context, req *structs.Restock
 	}
 
 	var resp structs.RestockOpenDoorResponse
-	_, err := s.Client.Request(ctx).
+	_, err := s.Client.Request().
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/Repli/OpenDoorMethod")
@@ -55,7 +55,7 @@ func (s *OrderService) RestockOpenDoor(ctx context.Context, req *structs.Restock
 // RestockOpenDoor opens the door for restocking (testing endpoint)
 func (s *OrderService) OrderDetail(ctx context.Context, transID string) (*structs.OrderDetailResponse, error) {
 	var resp structs.OrderDetailResponse
-	_, err := s.Client.Request(ctx).
+	_, err := s.Client.Request().
 		SetPathParam("transID", transID).
 		SetResult(&resp).
 		Get("/OpenApi/Order/{transID}/Detail")

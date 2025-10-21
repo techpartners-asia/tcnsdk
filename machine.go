@@ -1,7 +1,6 @@
 package tcnsdk
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/techpartners-asia/tcnsdk/structs"
@@ -13,9 +12,9 @@ type MachineService struct {
 }
 
 // GetMachineInfo retrieves device information
-func (s *MachineService) GetMachineInfo(ctx context.Context, machineID string) (*structs.MachineInfoResponse, error) {
+func (s *MachineService) GetMachineInfo(machineID string) (*structs.MachineInfoResponse, error) {
 	var resp structs.MachineInfoResponse
-	_, err := s.Client.Request(ctx).
+	_, err := s.Client.Request().
 		SetResult(&resp).
 		Get(fmt.Sprintf("/OpenApi/Machine/Info/%s", machineID))
 
@@ -27,9 +26,9 @@ func (s *MachineService) GetMachineInfo(ctx context.Context, machineID string) (
 }
 
 // GetMachineCommodities retrieves equipment product information
-func (s *MachineService) GetMachineCommodities(ctx context.Context, machineID string) (*structs.CommodityResponse, error) {
+func (s *MachineService) GetMachineCommodities(machineID string) (*structs.CommodityResponse, error) {
 	var resp structs.CommodityResponse
-	_, err := s.Client.Request(ctx).
+	_, err := s.Client.Request().
 		SetResult(&resp).
 		Get(fmt.Sprintf("/OpenApi/Machine/Commoditys/%s", machineID))
 
@@ -41,9 +40,9 @@ func (s *MachineService) GetMachineCommodities(ctx context.Context, machineID st
 }
 
 // ListSlot lists the slots in a vending machine with their product information
-func (s *MachineService) ListSlot(ctx context.Context, vendId string) (*structs.ListSlotResponse, error) {
+func (s *MachineService) ListSlot(vendId string) (*structs.ListSlotResponse, error) {
 	var resp structs.ListSlotResponse
-	_, err := s.Client.Request(ctx).
+	_, err := s.Client.Request().
 		SetResult(&resp).
 		Get(fmt.Sprintf("/OpenApi/%s/VendSlotCommoditys", vendId))
 	if err != nil {
@@ -53,9 +52,9 @@ func (s *MachineService) ListSlot(ctx context.Context, vendId string) (*structs.
 }
 
 // AddProductToMachine adds a product to a vending machine
-func (s *MachineService) AddProductToMachine(ctx context.Context, req *structs.AddProductToMachineRequest) (*structs.AddProductToMachineResponse, error) {
+func (s *MachineService) AddProductToMachine(req *structs.AddProductToMachineRequest) (*structs.AddProductToMachineResponse, error) {
 	var resp structs.AddProductToMachineResponse
-	_, err := s.Client.Request(ctx).
+	_, err := s.Client.Request().
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/VendSlotCommoditys/Add")
@@ -68,9 +67,9 @@ func (s *MachineService) AddProductToMachine(ctx context.Context, req *structs.A
 }
 
 // DeleteProductFromMachine removes a product from a vending machine
-func (s *MachineService) DeleteProductFromMachine(ctx context.Context, machineID string, req *structs.DeleteProductFromMachineRequest) (*structs.DeleteProductFromMachineResponse, error) {
+func (s *MachineService) DeleteProductFromMachine(machineID string, req *structs.DeleteProductFromMachineRequest) (*structs.DeleteProductFromMachineResponse, error) {
 	var resp structs.DeleteProductFromMachineResponse
-	_, err := s.Client.Request(ctx).
+	_, err := s.Client.Request().
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/VendSlotCommoditys/Delete")
@@ -82,9 +81,9 @@ func (s *MachineService) DeleteProductFromMachine(ctx context.Context, machineID
 }
 
 // UpdateProductOnMachine updates a product on a vending machine
-func (s *MachineService) UpdateProductOnMachine(ctx context.Context, machineID string, req *structs.UpdateProductOnMachineRequest) (*structs.UpdateProductOnMachineResponse, error) {
+func (s *MachineService) UpdateProductOnMachine(machineID string, req *structs.UpdateProductOnMachineRequest) (*structs.UpdateProductOnMachineResponse, error) {
 	var resp structs.UpdateProductOnMachineResponse
-	_, err := s.Client.Request(ctx).
+	_, err := s.Client.Request().
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/VendSlotCommoditys/Modify")

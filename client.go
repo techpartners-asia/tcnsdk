@@ -86,17 +86,6 @@ func (c *Client) getAuthResponse() (*structs.AuthResponse, error) {
 }
 
 // Request performs an authenticated request
-func (c *Client) Request() *resty.Request {
-	authResp, err := c.getAuthResponse()
-	if err != nil {
-		// Return request without auth if token retrieval fails
-		return c.client.R()
-	}
-
-	return c.client.R().
-		SetHeader("Authorization", authResp.Data.Token)
-}
-
 // Close closes the client and releases resources
 func (c *Client) Close() error {
 	return c.client.Close()

@@ -19,8 +19,14 @@ func (s *OrderService) OpenDoor(req *structs.OpenDoorRequest) (*structs.OpenDoor
 		req.TimeSp = time.Now().Unix()
 	}
 
+	authResp, err := s.Client.getAuthResponse()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get auth response: %w", err)
+	}
+
 	var resp structs.OpenDoorResponse
-	_, err := s.Client.Request().
+	_, err = s.Client.client.R().
+		SetHeader("Authorization", authResp.Data.Token).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/Order/OpenDoor")
@@ -38,8 +44,14 @@ func (s *OrderService) RestockOpenDoor(req *structs.RestockOpenDoorRequest) (*st
 		req.TimeSp = time.Now().Unix()
 	}
 
+	authResp, err := s.Client.getAuthResponse()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get auth response: %w", err)
+	}
+
 	var resp structs.RestockOpenDoorResponse
-	_, err := s.Client.Request().
+	_, err = s.Client.client.R().
+		SetHeader("Authorization", authResp.Data.Token).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/Repli/OpenDoorMethod")
@@ -54,7 +66,13 @@ func (s *OrderService) RestockOpenDoor(req *structs.RestockOpenDoorRequest) (*st
 // RestockOpenDoor opens the door for restocking (testing endpoint)
 func (s *OrderService) OrderDetail(transID string) (*structs.OrderDetailResponse, error) {
 	var resp structs.OrderDetailResponse
-	_, err := s.Client.Request().
+	authResp, err := s.Client.getAuthResponse()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get auth response: %w", err)
+	}
+
+	_, err = s.Client.client.R().
+		SetHeader("Authorization", authResp.Data.Token).
 		SetPathParam("transID", transID).
 		SetResult(&resp).
 		Get("/OpenApi/Order/{transID}/Detail")

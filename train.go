@@ -16,7 +16,13 @@ func NewTrainService(client *Client) *TrainService {
 
 func (s *TrainService) TrainProduct(req *structs.ProductTrainRequest) (*structs.ProductTrainResponse, error) {
 	var resp structs.ProductTrainResponse
-	_, err := s.client.Request().
+	authResp, err := s.client.getAuthResponse()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get auth response: %w", err)
+	}
+
+	_, err = s.client.client.R().
+		SetHeader("Authorization", authResp.Data.Token).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/PutNewCommodity")
@@ -30,7 +36,13 @@ func (s *TrainService) TrainProduct(req *structs.ProductTrainRequest) (*structs.
 
 func (s *TrainService) ListProductTrainRequest(req *structs.ListProductTrainRequest) (*structs.ListProductTrainResponse, error) {
 	var resp structs.ListProductTrainResponse
-	_, err := s.client.Request().
+	authResp, err := s.client.getAuthResponse()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get auth response: %w", err)
+	}
+
+	_, err = s.client.client.R().
+		SetHeader("Authorization", authResp.Data.Token).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/CommodityApply/Record")

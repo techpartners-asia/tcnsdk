@@ -14,7 +14,13 @@ type MachineService struct {
 // GetMachineInfo retrieves device information
 func (s *MachineService) GetMachineInfo(machineID string) (*structs.MachineInfoResponse, error) {
 	var resp structs.MachineInfoResponse
-	_, err := s.Client.Request().
+	authResp, err := s.Client.getAuthResponse()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get auth response: %w", err)
+	}
+
+	_, err = s.Client.client.R().
+		SetHeader("Authorization", authResp.Data.Token).
 		SetResult(&resp).
 		Get(fmt.Sprintf("/OpenApi/Machine/Info/%s", machineID))
 
@@ -28,7 +34,13 @@ func (s *MachineService) GetMachineInfo(machineID string) (*structs.MachineInfoR
 // GetMachineCommodities retrieves equipment product information
 func (s *MachineService) GetMachineCommodities(machineID string) (*structs.CommodityResponse, error) {
 	var resp structs.CommodityResponse
-	_, err := s.Client.Request().
+	authResp, err := s.Client.getAuthResponse()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get auth response: %w", err)
+	}
+
+	_, err = s.Client.client.R().
+		SetHeader("Authorization", authResp.Data.Token).
 		SetResult(&resp).
 		Get(fmt.Sprintf("/OpenApi/Machine/Commoditys/%s", machineID))
 
@@ -42,7 +54,13 @@ func (s *MachineService) GetMachineCommodities(machineID string) (*structs.Commo
 // ListSlot lists the slots in a vending machine with their product information
 func (s *MachineService) ListSlot(vendId string) (*structs.ListSlotResponse, error) {
 	var resp structs.ListSlotResponse
-	_, err := s.Client.Request().
+	authResp, err := s.Client.getAuthResponse()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get auth response: %w", err)
+	}
+
+	_, err = s.Client.client.R().
+		SetHeader("Authorization", authResp.Data.Token).
 		SetResult(&resp).
 		Get(fmt.Sprintf("/OpenApi/%s/VendSlotCommoditys", vendId))
 	if err != nil {
@@ -54,7 +72,13 @@ func (s *MachineService) ListSlot(vendId string) (*structs.ListSlotResponse, err
 // AddProductToMachine adds a product to a vending machine
 func (s *MachineService) AddProductToMachine(req *structs.AddProductToMachineRequest) (*structs.AddProductToMachineResponse, error) {
 	var resp structs.AddProductToMachineResponse
-	_, err := s.Client.Request().
+	authResp, err := s.Client.getAuthResponse()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get auth response: %w", err)
+	}
+
+	_, err = s.Client.client.R().
+		SetHeader("Authorization", authResp.Data.Token).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/VendSlotCommoditys/Add")
@@ -69,7 +93,13 @@ func (s *MachineService) AddProductToMachine(req *structs.AddProductToMachineReq
 // DeleteProductFromMachine removes a product from a vending machine
 func (s *MachineService) DeleteProductFromMachine(machineID string, req *structs.DeleteProductFromMachineRequest) (*structs.DeleteProductFromMachineResponse, error) {
 	var resp structs.DeleteProductFromMachineResponse
-	_, err := s.Client.Request().
+	authResp, err := s.Client.getAuthResponse()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get auth response: %w", err)
+	}
+
+	_, err = s.Client.client.R().
+		SetHeader("Authorization", authResp.Data.Token).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/VendSlotCommoditys/Delete")
@@ -83,7 +113,13 @@ func (s *MachineService) DeleteProductFromMachine(machineID string, req *structs
 // UpdateProductOnMachine updates a product on a vending machine
 func (s *MachineService) UpdateProductOnMachine(machineID string, req *structs.UpdateProductOnMachineRequest) (*structs.UpdateProductOnMachineResponse, error) {
 	var resp structs.UpdateProductOnMachineResponse
-	_, err := s.Client.Request().
+	authResp, err := s.Client.getAuthResponse()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get auth response: %w", err)
+	}
+
+	_, err = s.Client.client.R().
+		SetHeader("Authorization", authResp.Data.Token).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/VendSlotCommoditys/Modify")

@@ -18,7 +18,13 @@ func NewProductService(client *Client) *ProductService {
 // GetProduct returns a product by ID
 func (s *ProductService) ListProducts(req *structs.ProductListRequest) (*structs.ProductListResponse, error) {
 	var resp structs.ProductListResponse
-	_, err := s.client.Request().
+	authResp, err := s.client.getAuthResponse()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get auth response: %w", err)
+	}
+
+	_, err = s.client.client.R().
+		SetHeader("Authorization", authResp.Data.Token).
 		SetQueryParams(map[string]string{
 			"pageIndex":     fmt.Sprintf("%d", req.PageIndex),
 			"pageSize":      fmt.Sprintf("%d", req.PageSize),
@@ -38,7 +44,13 @@ func (s *ProductService) ListProducts(req *structs.ProductListRequest) (*structs
 
 func (s *ProductService) UpdateProduct(req *structs.ProductUpdateRequest) (*structs.ProductUpdateResponse, error) {
 	var resp structs.ProductUpdateResponse
-	_, err := s.client.Request().
+	authResp, err := s.client.getAuthResponse()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get auth response: %w", err)
+	}
+
+	_, err = s.client.client.R().
+		SetHeader("Authorization", authResp.Data.Token).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/CustomerCommoditys/Update")

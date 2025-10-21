@@ -40,7 +40,7 @@ func (s *MachineService) GetMachineCommodities(machineID string) (*structs.Commo
 	}
 
 	_, err = s.Client.client.R().
-		SetHeader("Authorization", authResp.Data.Token).
+		SetAuthToken(authResp.Data.Token).
 		SetResult(&resp).
 		Get(fmt.Sprintf("/OpenApi/Machine/Commoditys/%s", machineID))
 
@@ -60,7 +60,7 @@ func (s *MachineService) ListSlot(vendId string) (*structs.ListSlotResponse, err
 	}
 
 	_, err = s.Client.client.R().
-		SetHeader("Authorization", authResp.Data.Token).
+		SetAuthToken(authResp.Data.Token).
 		SetResult(&resp).
 		Get(fmt.Sprintf("/OpenApi/%s/VendSlotCommoditys", vendId))
 	if err != nil {
@@ -78,7 +78,7 @@ func (s *MachineService) AddProductToMachine(req *structs.AddProductToMachineReq
 	}
 
 	_, err = s.Client.client.R().
-		SetHeader("Authorization", authResp.Data.Token).
+		SetAuthToken(authResp.Data.Token).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/VendSlotCommoditys/Add")
@@ -99,7 +99,7 @@ func (s *MachineService) DeleteProductFromMachine(machineID string, req *structs
 	}
 
 	_, err = s.Client.client.R().
-		SetHeader("Authorization", authResp.Data.Token).
+		SetAuthToken(authResp.Data.Token).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/VendSlotCommoditys/Delete")
@@ -119,7 +119,7 @@ func (s *MachineService) UpdateProductOnMachine(machineID string, req *structs.U
 	}
 
 	_, err = s.Client.client.R().
-		SetHeader("Authorization", authResp.Data.Token).
+		SetAuthToken(authResp.Data.Token).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/VendSlotCommoditys/Modify")

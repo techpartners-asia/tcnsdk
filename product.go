@@ -24,7 +24,7 @@ func (s *ProductService) ListProducts(req *structs.ProductListRequest) (*structs
 	}
 
 	_, err = s.client.client.R().
-		SetHeader("Authorization", authResp.Data.Token).
+		SetAuthToken(authResp.Data.Token).
 		SetQueryParams(map[string]string{
 			"pageIndex":     fmt.Sprintf("%d", req.PageIndex),
 			"pageSize":      fmt.Sprintf("%d", req.PageSize),
@@ -50,7 +50,7 @@ func (s *ProductService) UpdateProduct(req *structs.ProductUpdateRequest) (*stru
 	}
 
 	_, err = s.client.client.R().
-		SetHeader("Authorization", authResp.Data.Token).
+		SetAuthToken(authResp.Data.Token).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/CustomerCommoditys/Update")

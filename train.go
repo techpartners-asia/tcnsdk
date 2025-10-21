@@ -22,7 +22,7 @@ func (s *TrainService) TrainProduct(req *structs.ProductTrainRequest) (*structs.
 	}
 
 	_, err = s.client.client.R().
-		SetHeader("Authorization", authResp.Data.Token).
+		SetAuthToken(authResp.Data.Token).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/PutNewCommodity")
@@ -42,7 +42,7 @@ func (s *TrainService) ListProductTrainRequest(req *structs.ListProductTrainRequ
 	}
 
 	_, err = s.client.client.R().
-		SetHeader("Authorization", authResp.Data.Token).
+		SetAuthToken(authResp.Data.Token).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/CommodityApply/Record")

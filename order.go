@@ -26,7 +26,7 @@ func (s *OrderService) OpenDoor(req *structs.OpenDoorRequest) (*structs.OpenDoor
 
 	var resp structs.OpenDoorResponse
 	_, err = s.Client.client.R().
-		SetHeader("Authorization", authResp.Data.Token).
+		SetAuthToken(authResp.Data.Token).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/Order/OpenDoor")
@@ -51,7 +51,7 @@ func (s *OrderService) RestockOpenDoor(req *structs.RestockOpenDoorRequest) (*st
 
 	var resp structs.RestockOpenDoorResponse
 	_, err = s.Client.client.R().
-		SetHeader("Authorization", authResp.Data.Token).
+		SetAuthToken(authResp.Data.Token).
 		SetBody(req).
 		SetResult(&resp).
 		Post("/OpenApi/Repli/OpenDoorMethod")
@@ -72,7 +72,7 @@ func (s *OrderService) OrderDetail(transID string) (*structs.OrderDetailResponse
 	}
 
 	_, err = s.Client.client.R().
-		SetHeader("Authorization", authResp.Data.Token).
+		SetAuthToken(authResp.Data.Token).
 		SetPathParam("transID", transID).
 		SetResult(&resp).
 		Get("/OpenApi/Order/{transID}/Detail")

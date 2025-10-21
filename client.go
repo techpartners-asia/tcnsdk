@@ -65,7 +65,7 @@ func NewClient(config *Config) *Client {
 }
 
 // getAuthToken retrieves authentication token
-func (c *Client) getAuthToken() (string, error) {
+func (c *Client) getAuthResponse() (*structs.AuthResponse, error) {
 	authReq := &structs.AuthRequest{
 		AppID:  c.config.AppID,
 		Key:    c.config.Key,
@@ -79,22 +79,22 @@ func (c *Client) getAuthToken() (string, error) {
 		Post("/OpenApi/Login")
 
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return authResp.Token, nil
+	return &authResp, nil
 }
 
 // Request performs an authenticated request
 func (c *Client) Request() *resty.Request {
-	token, err := c.getAuthToken()
+	authResp, err := c.getAuthResponse()
 	if err != nil {
 		// Return request without auth if token retrieval fails
 		return c.client.R()
 	}
 
 	return c.client.R().
-		SetHeader("Authorization", token)
+		SetHeader("Authorization", authResp.Data.Token)
 }
 
 // Close closes the client and releases resources

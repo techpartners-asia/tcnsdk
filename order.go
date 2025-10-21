@@ -1,7 +1,6 @@
 package tcnsdk
 
 import (
-	"context"
 	"fmt"
 	"time"
 
@@ -15,7 +14,7 @@ type OrderService struct {
 
 // OpenDoor opens the vending machine door
 // [stable] [tested]
-func (s *OrderService) OpenDoor(ctx context.Context, req *structs.OpenDoorRequest) (*structs.OpenDoorResponse, error) {
+func (s *OrderService) OpenDoor(req *structs.OpenDoorRequest) (*structs.OpenDoorResponse, error) {
 	if req.TimeSp == 0 {
 		req.TimeSp = time.Now().Unix()
 	}
@@ -34,7 +33,7 @@ func (s *OrderService) OpenDoor(ctx context.Context, req *structs.OpenDoorReques
 }
 
 // RestockOpenDoor opens the door for restocking (testing endpoint)
-func (s *OrderService) RestockOpenDoor(ctx context.Context, req *structs.RestockOpenDoorRequest) (*structs.RestockOpenDoorResponse, error) {
+func (s *OrderService) RestockOpenDoor(req *structs.RestockOpenDoorRequest) (*structs.RestockOpenDoorResponse, error) {
 	if req.TimeSp == 0 {
 		req.TimeSp = time.Now().Unix()
 	}
@@ -53,7 +52,7 @@ func (s *OrderService) RestockOpenDoor(ctx context.Context, req *structs.Restock
 }
 
 // RestockOpenDoor opens the door for restocking (testing endpoint)
-func (s *OrderService) OrderDetail(ctx context.Context, transID string) (*structs.OrderDetailResponse, error) {
+func (s *OrderService) OrderDetail(transID string) (*structs.OrderDetailResponse, error) {
 	var resp structs.OrderDetailResponse
 	_, err := s.Client.Request().
 		SetPathParam("transID", transID).

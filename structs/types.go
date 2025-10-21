@@ -200,8 +200,15 @@ type AuthRequest struct {
 
 // AuthResponse represents authentication response
 type AuthResponse struct {
-	Token     string `json:"Token"`
-	ExpiresIn int    `json:"ExpiresIn"`
+	StatusCode int `json:"statusCode"`
+	Data       struct {
+		Token     string `json:"token"`
+		ExpiresIn int    `json:"expiresIn"`
+	} `json:"data"`
+	Succeeded bool    `json:"succeeded"`
+	Errors    *string `json:"errors"`
+	Extras    *string `json:"extras"`
+	Timestamp int64   `json:"timestamp"`
 }
 
 // BaseResponse represents common API response structure

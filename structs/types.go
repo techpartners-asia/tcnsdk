@@ -757,7 +757,7 @@ type OpenDoorData struct {
 
 type OpenDoorResponse struct {
 	BaseResponse
-	Data OpenDoorData `json:"data"`
+	Data *OpenDoorData `json:"data"`
 }
 
 // RestockOpenDoorRequest represents restock door opening request

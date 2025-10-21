@@ -735,12 +735,13 @@ type OpenDoorRequest struct {
 
 // OpenDoorResponse represents door opening response
 type OpenDoorResponse struct {
-	OrderID    string         `json:"OrderId"`
-	TranseType TranseType     `json:"TranseType"`
-	Action     CallbackAction `json:"Action"`
-	Status     bool           `json:"Status"`
-	Msg        string         `json:"Msg"`
-	Data       string         `json:"Data"`
+	OrderID         string         `json:"orderId"`
+	TranseType      TranseType     `json:"transeType"`
+	Action          CallbackAction `json:"action"`
+	Status          bool           `json:"status"`
+	Msg             string         `json:"msg"`
+	Data            string         `json:"data"`
+	CustomerDetails string         `json:"customerDetails"`
 }
 
 // RestockOpenDoorRequest represents restock door opening request

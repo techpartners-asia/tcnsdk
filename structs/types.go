@@ -600,110 +600,113 @@ const (
 
 // CallbackEvent represents callback event structure
 type CallbackEvent struct {
-	OrderID         string         `json:"OrderId"`
-	OrderNo         string         `json:"OrderNo"`
-	TranseType      TranseType     `json:"TranseType"`
-	Action          CallbackAction `json:"Action"`
-	Status          bool           `json:"Status"`
-	Msg             string         `json:"Msg"`
-	CustomerDetails string         `json:"CustomerDetails"`
-	Data            interface{}    `json:"Data"`
+	OrderID         string         `json:"orderId"`
+	OrderNo         string         `json:"orderNo"`
+	TranseType      TranseType     `json:"transeType"`
+	Action          CallbackAction `json:"action"`
+	Status          bool           `json:"status"`
+	Msg             string         `json:"msg"`
+	CustomerDetails string         `json:"customerDetails"`
+	Data            interface{}    `json:"data"`
 }
 
 // OrderDetectedCallback represents OrderDetected callback event
 type OrderDetectedCallback struct {
-	OrderID    string            `json:"OrderId"`
-	OrderNo    string            `json:"OrderNo"`
-	TranseType TranseType        `json:"TranseType"`
-	OrgID      string            `json:"OrgId"`
-	Action     CallbackAction    `json:"Action"`
-	Status     bool              `json:"Status"`
-	Msg        string            `json:"Msg"`
-	Data       DetectOrderDetail `json:"Data"`
+	OrderID    string            `json:"orderId"`
+	OrderNo    string            `json:"orderNo"`
+	TranseType TranseType        `json:"transeType"`
+	OrgID      string            `json:"orgId"`
+	Action     CallbackAction    `json:"action"`
+	Status     bool              `json:"status"`
+	Msg        string            `json:"msg"`
+	Data       DetectOrderDetail `json:"data"`
 }
 
 // OpenedDoorCallback represents OpenedDoor callback event
 type OpenedDoorCallback struct {
-	OrderID         string         `json:"OrderId"`
-	OrderNo         string         `json:"OrderNo"`
-	TranseType      TranseType     `json:"TranseType"`
-	Action          CallbackAction `json:"Action"`
-	Status          bool           `json:"Status"`
-	Msg             string         `json:"Msg"`
-	CustomerDetails string         `json:"CustomerDetails"`
-	Data            string         `json:"Data"`
+	OrderID         string         `json:"orderId"`
+	OrderNo         string         `json:"orderNo"`
+	TranseType      TranseType     `json:"transeType"`
+	Action          CallbackAction `json:"action"`
+	Status          bool           `json:"status"`
+	Msg             string         `json:"msg"`
+	CustomerDetails string         `json:"customerDetails"`
+	Data            string         `json:"data"`
 }
 
 // PreOpenDoorCallback represents PreOpenDoor callback event
 type PreOpenDoorCallback struct {
-	OrderID         string         `json:"OrderId"`
-	OrderNo         string         `json:"OrderNo"`
-	TranseType      TranseType     `json:"TranseType"`
-	Action          CallbackAction `json:"Action"`
-	Status          bool           `json:"Status"`
-	Msg             string         `json:"Msg"`
-	CustomerDetails string         `json:"CustomerDetails"`
-	Data            string         `json:"Data"`
+	OrderID         string         `json:"orderId"`
+	OrderNo         string         `json:"orderNo"`
+	TranseType      TranseType     `json:"transeType"`
+	Action          CallbackAction `json:"action"`
+	Status          bool           `json:"status"`
+	Msg             string         `json:"msg"`
+	CustomerDetails string         `json:"customerDetails"`
+	Data            string         `json:"data"`
 }
 
 // CloseDoorCallback represents CloseDoor callback event
 type CloseDoorCallback struct {
-	OrderID         string         `json:"OrderId"`
-	OrderNo         string         `json:"OrderNo"`
-	TranseType      TranseType     `json:"TranseType"`
-	Action          CallbackAction `json:"Action"`
-	Status          bool           `json:"Status"`
-	Msg             string         `json:"Msg"`
-	CustomerDetails string         `json:"CustomerDetails"`
-	Data            string         `json:"Data"`
+	OrderID         string         `json:"orderId"`
+	OrderNo         string         `json:"orderNo"`
+	TranseType      TranseType     `json:"transeType"`
+	Action          CallbackAction `json:"action"`
+	Status          bool           `json:"status"`
+	Msg             string         `json:"msg"`
+	CustomerDetails string         `json:"customerDetails"`
+	Data            string         `json:"data"`
 }
 
 // this event is triggered when the machine fails to open the door or reports an exception when closing the door.
 type CancelCallback struct {
-	OrderID         string         `json:"OrderId"`
-	OrderNo         string         `json:"OrderNo"`
-	TranseType      TranseType     `json:"TranseType"`
-	Action          CallbackAction `json:"Action"`
-	Status          bool           `json:"Status"`
-	Msg             string         `json:"Msg"`
-	CustomerDetails string         `json:"CustomerDetails"`
-	Data            string         `json:"Data"`
+	OrderID         string         `json:"orderId"`
+	OrderNo         string         `json:"orderNo"`
+	TranseType      TranseType     `json:"transeType"`
+	Action          CallbackAction `json:"action"`
+	Status          bool           `json:"status"`
+	Msg             string         `json:"msg"`
+	CustomerDetails string         `json:"customerDetails"`
+	Data            string         `json:"data"`
 }
 
 // OrderSettlementCallback represents OrderSettlement callback event
 type OrderSettlementCallback struct {
-	OrderID         string            `json:"OrderId"`
-	OrderNo         string            `json:"OrderNo"`
-	TranseType      TranseType        `json:"TranseType"`
-	Action          CallbackAction    `json:"Action"`
-	Status          bool              `json:"Status"`
-	Msg             string            `json:"Msg"`
-	CustomerDetails string            `json:"CustomerDetails"`
-	Data            DetectOrderDetail `json:"Data"`
+	OrderID         string         `json:"orderId"`
+	OrderNo         string         `json:"orderNo"`
+	OrgID           string         `json:"orgId"`
+	TranseType      TranseType     `json:"transeType"`
+	Action          CallbackAction `json:"action"`
+	Status          bool           `json:"status"`
+	Msg             string         `json:"msg"`
+	CustomerDetails string         `json:"customerDetails"`
+	// NOTE
+	// Data could be parsed as DetectOrderDetail or string (raw JSON) based on Status
+	Data *string `json:"data"`
 }
 
 // OrderAdjustmentCallback represents OrderAdjustment callback event
 type OrderAdjustmentCallback struct {
-	OrderID         string          `json:"OrderId"`
-	OrderNo         string          `json:"OrderNo"`
-	TranseType      TranseType      `json:"TranseType"`
-	Action          CallbackAction  `json:"Action"`
-	Status          bool            `json:"Status"`
-	Msg             string          `json:"Msg"`
-	CustomerDetails string          `json:"CustomerDetails"`
-	Data            OrderAdjustment `json:"Data"`
+	OrderID         string          `json:"orderId"`
+	OrderNo         string          `json:"orderNo"`
+	TranseType      TranseType      `json:"transeType"`
+	Action          CallbackAction  `json:"action"`
+	Status          bool            `json:"status"`
+	Msg             string          `json:"msg"`
+	CustomerDetails string          `json:"customerDetails"`
+	Data            OrderAdjustment `json:"data"`
 }
 
 // OrderRefundCallback represents OrderRefund callback event
 type OrderRefundCallback struct {
-	OrderID         string         `json:"OrderId"`
-	OrderNo         string         `json:"OrderNo"`
-	TranseType      TranseType     `json:"TranseType"`
-	Action          CallbackAction `json:"Action"`
+	OrderID         string         `json:"orderId"`
+	OrderNo         string         `json:"orderNo"`
+	TranseType      TranseType     `json:"transeType"`
+	Action          CallbackAction `json:"action"`
 	Status          bool           `json:"Status"`
-	Msg             string         `json:"Msg"`
-	CustomerDetails string         `json:"CustomerDetails"`
-	Data            OrderRefund    `json:"Data"`
+	Msg             string         `json:"msg"`
+	CustomerDetails string         `json:"customerDetails"`
+	Data            OrderRefund    `json:"data"`
 }
 
 // ProductReviewNotificationCallback represents product review notification callback

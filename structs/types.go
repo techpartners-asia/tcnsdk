@@ -588,7 +588,7 @@ type CallbackAction string
 const (
 	CallbackActionPreOpenDoor     CallbackAction = "PreOpenDoor"
 	CallbackActionOpenedDoor      CallbackAction = "OpenedDoor"
-	CallbackActionCloseDoor       CallbackAction = "CloseDoor"
+	CallbackActionClosedDoor      CallbackAction = "ClosedDoor"
 	CallbackActionCancel          CallbackAction = "Cancel"
 	CallbackActionOrderDetected   CallbackAction = "OrderDetected"
 	CallbackActionOrderSettlement CallbackAction = "OrderSettlement"

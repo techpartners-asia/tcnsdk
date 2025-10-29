@@ -728,7 +728,7 @@ type DetectOrderDetail struct {
 type TradeProductModel struct {
 	ID         string    `json:"Id"`
 	AlisName   string    `json:"AlisName"`
-	BuyCount   int       `json:"BuyCount"`
+	BuyCount   float64   `json:"BuyCount"`
 	MeterType  MeterType `json:"MeterType"`
 	Price      float64   `json:"Price"`
 	PictureURL string    `json:"PictureUrl,omitempty"`

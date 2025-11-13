@@ -53,6 +53,7 @@ type ProductTrainRequest struct {
 	PictureUrl_Other  string  `json:"pictureUrl_other"`
 	Weight            float64 `json:"weight"`
 	Packing           string  `json:"packing"`
+	NotifyURL         string  `json:"NotifyUrl"`
 }
 
 type ListSlotRequest struct {

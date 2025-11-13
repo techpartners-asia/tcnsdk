@@ -44,6 +44,7 @@ func (s *TrainService) ListProductTrainRequest(req *structs.ListProductTrainRequ
 	_, err = s.client.client.R().
 		SetAuthToken(authResp.Data.Token).
 		SetBody(req).
+		SetQueryParam("recordId", fmt.Sprintf("%d", req.RecordID)).
 		SetResult(&resp).
 		Post("/OpenApi/CommodityApply/Record")
 

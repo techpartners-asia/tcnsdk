@@ -59,12 +59,13 @@ type ListSlotRequest struct {
 	VendID string `json:"vendId"`
 }
 type ListProductTrainRequest struct {
-	PageIndex   uint   `json:"pageIndex"`
-	PageSize    uint   `json:"pageSize"`
-	Sku         string `json:"sku"`
-	RecordID    string `json:"recordId"`
-	CommodityID string `json:"commodityId"`
-	State       State  `json:"state"`
+	PageIndex   *uint   `json:"pageIndex"`
+	PageSize    *uint   `json:"pageSize"`
+	Sku         *string `json:"sku"`
+	CommodityID *string `json:"commodityId"`
+	State       *State  `json:"state"`
+	//record id is param
+	RecordID *string `json:"recordId"`
 }
 
 type ProductUpdateRequest struct {

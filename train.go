@@ -54,3 +54,28 @@ func (s *TrainService) ListProductTrainRequest(req *structs.ListProductTrainRequ
 
 	return &resp, nil
 }
+func (s *TrainService) GetTrainRequest(id string) (*structs.ProductTrain, error) {
+	var resp structs.ListProductTrainResponse
+	authResp, err := s.client.getAuthResponse()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get auth response: %w", err)
+	}
+
+	_, err = s.client.client.R().
+		SetAuthToken(authResp.Data.Token).
+		SetQueryParam("recordId", id).
+		SetResult(&resp).
+		Post("/OpenApi/CommodityApply/Record")
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to list product train request: %w", err)
+	}
+
+	if len(resp.Data.Items) == 0 {
+		return nil, structs.ErrNoProductTrainRequestFound
+	}
+
+	item := resp.Data.Items[0]
+
+	return &item, nil
+}

@@ -181,7 +181,7 @@ type Product struct {
 	CostPrice         float64   `json:"costPrice"`
 	CustomerCostPrice float64   `json:"customerCostPrice"`
 	Types             []string  `json:"types"`
-	SupportType       []string  `json:"supportType"`
+	SupportType       string    `json:"supportType"`
 	WeightFloatValue  float64   `json:"weightFloatValue"`
 	SupportTypeName   string    `json:"supportTypeName"`
 }

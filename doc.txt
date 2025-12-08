@@ -1,0 +1,1203 @@
+SAAS Transaction Related Interface Documentation V2.1.2 
+API Interface Documentation
+Table of contents
+API Interface Documentation
+1. Authentication (Post)
+2. Open the door (Post)
+3. Payment callback interface (POST)
+4. Description of common return values
+
+Test environment address
+https://openapi1.ourvend.com
+Formal environment address
+https://openapi.aivendortech.com
+Time series diagram
+Consumer shopping
+
+Public return value description :
+Return value :
+name
+type
+describe
+statusCode
+int
+Request status code
+succeeded
+boolean
+Was the operation successful?
+errors
+string
+Error message
+extras
+string
+Other tips
+timestamp
+Long
+Timestamp
+1. Authentication
+URL : https://openapi1.ourvend.com/OpenApi/Login​​
+Method : POST
+parameter :
+name
+type
+describe
+appID
+string
+P537217083646021
+key
+string
+loYgqEZkCUuDltrnxHvn
+secret
+string
+fmYGOcX4C3InYk3wqRaZb2Z9JWIKaU
+Return value :
+name
+type
+describe
+Token
+string
+Access token
+ExpiresIn
+int
+Valid time (seconds)
+Request Body (JSON)
+{ "appID": "xxxxxxxxxxxxxxxxxx", "key": "xxxxxxxxxxxxxxxxxxxxxxxxx", "secret": "xxxxxxxxxxxxxxxxxxxxxxxxxxx" }
+2. Product Management
+Product catalog pagination interface
+URL: https://openapi1.ourvend.com/ OpenApi/CustomerCommoditys
+Method: GET
+Request parameters :
+name
+type
+describe
+PageIndex
+string
+Page number (required)
+PageSize
+string
+Page size (required)
+Name
+string
+Product Name or SKU
+CommodityType
+string
+Product Type
+SupportType
+string
+Supported device models
+Example:
+{ "name": "", // Product name or SKU "commodityType": "", // Product type "supportType": "0001", // Supported device models "pageIndex": 1, // Page number "pageSize": 10 // Page size }
+{ "statusCode": 200, "data": { "total": 10, "items": [ { "id": "2842391265542853", // Product ID "extCommodityId": "2842391256433349", "sku": "0000007", // sku "pictureUrl": "https://v3hw-video.oss-accelerate.aliyuncs.com/Commodity/20250820/5ee1e8dde33b43f7848925efce98ddba", // Main Image "name": "Coca-Cola", // Product Name "isOnShelves": false, "packing": "Cola", "meterType": 2, // 1. Piece Count 2. Weight Count "meterUnit": "500g", "meterTypeName": "2", "weight": 1000, // Product weight "price": 5, // Unit price "costPrice": 5, "customerCostPrice": 5, // This is the costprice value when modifying the purchase price "types": [], "supportType": "0002", // Supported device types "weightFloatValue": null, "supportTypeName": "Gravity cabinet" }, { "id": "2841388296078021", "extCommodityId": "2824515832169157", "sku": "6973870136480", "pictureUrl": "https://v3hw-oss.ourvend.com/Commodity/20250807/dfa52635b3174ff0b5323cc466943778", "name": "Master Kong Jasmine Tea 500ml", "isOnShelves": false, "packing": "bottle", "meterType": 1, "meterUnit": "piece", "meterTypeName": "piece", "weight": 521, "price": 5, "costPrice": 5, "customerCostPrice": 3, "types": [], "supportType": "0002,0001", "weightFloatValue": null, "supportTypeName": "gravity cabinet, dynamic cabinet" }, { "id": "2841451537367749", "extCommodityId": "2824515147367109", "sku": "6944839905011", "pictureUrl": "https://v3hw-oss.ourvend.com/Commodity/20250807/9166da78a5fa4ff2bee4667f90699dce", "name": "Master Kong Iced Tea", "isOnShelves": false, "packing": "bottle", "meterType": 1, "meterUnit": "piece", "meterTypeName": "piece count", "weight": 525, "price": 5, "costPrice": 5, "customerCostPrice": 3, "types": [], "supportType": "0002,0001", "weightFloatValue": null, "supportTypeName": "gravity cabinet, dynamic cabinet" }, { "id": "2841454951678661", "extCommodityId": "2824505473123013", "sku": "6921317905106112", "pictureUrl": { " id ": " 2841455393456837 " , " extCommodityId " : " 2824505171706565 " , " sku " : } "20240412005", "pictureUrl": "https://v3hw-oss.ourvend.com/Commodity/20250807/63750de9bb304b6aa2cfb8d667d85ee5", "name": "Kangshifu Rock Sugar Red Grapefruit 1L", "isOnShelves": false, "packing": "bottle", "meterType": 1, "meterUnit": "piece", "meterTypeName": "piece", "weight": 1077, "price": 5, "costPrice": 5, "customerCostPrice": 3, "types": [], "supportType": "0002,0001", "weightFloatValue": null, "supportTypeName": "gravity cabinet, dynamic cabinet" }, { "id": "2841493485372101", "extCommodityId": "2824504087528133", "sku": "20240412010", "pictureUrl": "https://v3hw-oss.ourvend.com/Commodity/20250807/d4955f70a1454d29981c6c9f9219b9a0", "name": "康师傅陈皮酸梅汤1L", "isOnShelves": false, "packing": "瓶", "meterType": 1, "meterUnit": "件", "meterTypeName": "计件", "weight": 1086, "price": 5, "costPrice": 5, "customerCostPrice": 3, "types": [], "supportType": "0002,0001", "weightFloatValue": null, "supportTypeName": "重力柜,动态柜" }, { "id": "2841493943026373", "extCommodityId": "2824503690035909", "sku": "69771523303441", "pictureUrl": "https://v3hw-oss.ourvend.com/Commodity/20250807/3386a96d443c413bbea8fb16f5b8966d", "name": "Chengtian Lychee Flavored Soda", "isOnShelves": false, "packing": "bottle", "meterType": 1, "meterUnit": "piece", "meterTypeName": "piece", "weight": 310, "price": 5, "costPrice": 5, "customerCostPrice": 3, "types": [], "supportType": "0002,0001", "weightFloatValue": null, "supportTypeName": "Gravity Cabinet, Dynamic Cabinet" }, { "id": "2841494396437189", "extCommodityId": "2824452394320581", "sku": "69275731521861", "pictureUrl": "https://v3hw-oss.ourvend.com/Commodity/20250807/572939e97b374ea2abf850089eb270f0", "name": "中沃体质能量500ml", "isOnShelves": false, "packing": "瓶", "meterType": 1, "meterUnit": "件", "meterTypeName": "计件", "weight": 554, "price": 5, "costPrice": 5, "customerCostPrice": 3, "types": [], { " id": "2841380367516357 ", " extCommodityId": "2824430621967045", " sku": "6976909180058", "pictureUrl": "https://v3hw-oss.ourvend.com/Commodity/20250807/586a521719f6421fae057ada87fdc9a1" , "name": "Caifafa Natural Soda Water Jasmine Flavor", "isOnShelves": false, " packing": "bottle", "meterType": 1, "meterUnit": "piece", "meterTypeName": "piece", "weight": 429, "price": 5, "costPrice": 5, "customerCostPrice": 3, "types": [], "supportType": "0002,0001", "weightFloatValue": null, "supportTypeName": "Gravity cabinet, Dynamic cabinet" }, { "id": "2841495441539781", "extCommodityId": "2712641342505669", "sku": "69268925750101", "pictureUrl": "https://d21ykru8y0083g.cloudfront.net/ProductImage/20250520/f460dd6984e54866825b68d9f0f055ed.jpeg", "name": "TaoZi桃子清乌龙", "isOnShelves": false, "packing": "瓶", "meterType": 1, "meterUnit": "piece", "meterTypeName": "piece", "weight": 521, "price": 5, "costPrice": 5, "customerCostPrice": 3, "types": [], "supportType": "0002,0001", "weightFloatValue": "5", "supportTypeName": "gravity cabinet, dynamic cabinet" } ], "pageSize": 10, "pageIndex": 1, "message": null }, "succeeded": true, "errors": null, "extras": null, "timestamp": 1755651869 }
+View product details - V2.1.2
+URL: https://openapi1.ourvend.com/ OpenApi/CustomerCommoditys/{ CommodityIdOrSKU }
+Method: GET
+Request parameters :
+name
+type
+describe
+CommodityIdOrSKU
+string
+Product ID or SKU (required)
+Return value :
+name
+type
+describe
+id
+string
+Product ID
+sku
+string
+Product SKU
+pictureUrl
+string
+Product main image
+name
+string
+Product Name
+packing
+string
+Package
+meterType
+int
+1. Piecework 2. Weight-based
+meterUnit
+string
+Unit of weighing
+weight
+int
+Product weight
+customerCostPrice
+float
+Purchase price
+costPrice
+float
+Price
+supportType
+string
+model
+supportTypeName
+string
+Model Name
+weightFloatValue
+float
+floating value
+Edit product information
+URL: https://openapi1.ourvend.com/ OpenApi/CustomerCommoditys/Update
+Method: POST
+Example:
+{ "commodityId": "2841388296078021", // Product ID (retrieved from the query interface) "commodityName": "Master Kong Jasmine Tea 500ml", // Product Name "pictureUrl": "https://v3hw-oss.ourvend.com/Commodity/20250807/dfa52635b3174ff0b5323cc466943778", // Main Image, "weight": 521, // Weight "price": 5, // Unit Price "costPrice": 3, // Cost Price "syncAllMachine": true // Whether to sync to all devices }
+{ "statusCode": 200, "data": true, "succeeded": true, "errors": null, "extras": null, "timestamp": 1755659568 }
+Product Upload Interface
+URL: https://openapi1.ourvend.com/OpenAPI/PutNewCommodity
+Method: post
+Example:
+{ "sku": "316747543192471494895425697213", // Product barcode "name": "string", // Product name "price": 99999999999.9, // Price "pictureUrl": "string", // Main image "backImage": "string", // Back image "profileImage": "string", // Side image "topOrBottomImage": "string", // Top image "pictureUrl_Bottom": "string", // Bottom image "pictureUrl_Other": "string", // Other angles "weight": 99999999999.9, // Weight "packing": "string" // Packaging }
+{ "statusCode": 200, "data": "2025082001", // If not empty, it means the product is under review; otherwise, it means it already exists and has been downloaded. "succeeded": true, "errors": null, "extras": null, "timestamp": 1755659568 }
+Product Addition Pagination Interface - V2.1.2
+URL: https://openapi1.ourvend.com/ OpenApi/CommodityApplys
+Method : GET
+Request parameters :
+name
+type
+describe
+PageIndex
+string
+Page number (required)
+PageSize
+string
+Page size (required)
+sku
+string
+Product SKU
+state
+int
+Review status: 1. Pending review 2. Approved 3. Rejected
+Return value :
+name
+type
+describe
+id
+string
+Product ID
+sku
+string
+Product SKU
+name
+string
+Product Name
+pictureUrl
+string
+Product main image
+meterType
+int
+1. Piecework 2. Weight-based
+meterUnit
+string
+Unit of weighing
+weight
+int
+Product weight
+customerCostPrice
+float
+Purchase price
+costPrice
+float
+Price
+supportType
+string
+model
+supportTypeName
+string
+Model Name
+state
+int
+// 1. Pending review 2. Approved 3. Rejected
+rejectCause
+string
+Reasons for Rejection
+backImage
+string
+Background image
+profileImage
+string
+Side view
+topOrBottomImage
+string
+Top image or bottom image
+pictureUrlExtra
+string
+other
+Product New Arrival Details Interface - V2.1.2
+URL: https://openapi1.ourvend.com/ OpenApi/CommodityApplys/{ sku }
+Method : GET
+Method : GET
+Request parameters :
+name
+type
+describe
+sku
+string
+Page number (required)
+Return value :
+name
+type
+describe
+id
+string
+Product ID
+sku
+string
+Product SKU
+name
+string
+Product Name
+pictureUrl
+string
+Product main image
+meterType
+int
+1. Piecework 2. Weight-based
+meterUnit
+string
+Unit of weighing
+weight
+int
+Product weight
+customerCostPrice
+float
+Purchase price
+costPrice
+float
+Price
+supportType
+string
+model
+supportTypeName
+string
+Model Name
+state
+int
+// 1. Pending review 2. Approved 3. Rejected
+rejectCause
+string
+Reasons for Rejection
+backImage
+string
+Background image
+profileImage
+string
+Side view
+topOrBottomImage
+string
+Top image or bottom image
+pictureUrlExtra
+string
+other
+ Checking the product update review results - expired
+URL: https://openapi1.ourvend.com/OpenAPI/CommodityApply/Record
+Method: GET
+Example:
+{ "pageIndex": 0, // Page number "pageSize": 0, // Page size "recordId": "", // Review ID "commodityId": "string", // Product ID "sku": "string", // "state": 1 // Review status 1. Pending review 2. Approved 3. Rejected }
+{ "statusCode": 200, "data": { "total": 2, "items": [ { "sku": "000008", // Product barcode "name": "Yili", "tags": "[]", "pictureUrl": "https://v3hw-video.oss-us-east-1.aliyuncs.com/ProductImage/20250820/0abc0011adea4839a085aeb354da617d.jpg", // Main image "price": 10, "costPrice": 10, "weight": 1000, "nature": "Yili", "isPovertyRelief": false, "backImage": "https://v3hw-video.oss-us-east-1.aliyuncs.com/ProductImage/20250820/71ce0080c05546c9a323b74d462371ef.jpg", // Background image "profileImage": "https://v3hw-video.oss-us-east-1.aliyuncs.com/ProductImage/20250820/963321cca3c64407911d6f81cf8a0c22.jpg", // Side image "topOrBottomImage": "https://v3hw-video.oss-us-east-1.aliyuncs.com/ProductImage/20250820/bde7257f48234a65bf57f35a0a7ac42a.jpg", // Top or bottom image "organizeId": "2840986618348229", "remark": null, "rejectCause": null, // Reason for rejection "state": 1, // 1. Pending review 2. Approved 3. Rejected "qualityId": null, "qualityPeriod": 0, "createDate": "2025-08-20T00:51:24.265Z", // UTC time "modifyUserName": null, "supportType": "0001", // Supported device type "meterType": 1, // Pricing method 1. Piecework 2. Weight "meterTypeName": null, "applicationType": 1, "id": "2842392694702789", "pictureUrlExtra": { " sku": "0000007", "name": "Coca-Cola", "tags": "[]", "pictureUrl": } "https://v3hw-video.oss-us-east-1.aliyuncs.com/ProductImage/20250820/968057a7d93d458db9b625866e0633c7.jpg", "price": 5, "costPrice": 5, "weight": 1000, "nature": "Coke", "isPovertyRelief": false, "backImage": "", "profileImage": "", "topOrBottomImage": "", "organizeId": "2840986618348229", "remark": null, "rejectCause": null, "state": 2, "qualityId": null, "qualityPeriod": 0, "createDate": "2025-08-20T00:49:46.67Z", "modifyUserName": null, "supportType": "0002", "meterType": 2, "meterTypeName": null, "applicationType": 1, "id": "2842391095689925", "pictureUrlExtra": "," } ], "pageSize": 10, "pageIndex": 1, "message": null }, "succeeded": true, "errors": null, "extras": null, "timestamp": 1755673330 }
+
+
+Added equipment cargo channel product information
+url: https://openapi1.ourvend.com/OpenAPI/VendSlotCommoditys/ Add
+Method: POST
+[ { "vendId": "string", // Machine ID "commodityId": "string", // Product ID "layerNo": 0, // Layer number (start from 21) "doorNo": 0, // Door number "capacity": 0, // Capacity "earlyrate": true, // Whether to enable inventory warnings "earlywaringcount": 0, // Warning quantity "price": 0 // Price } ]
+{ "statusCode": 200, "data": true, "succeeded": true, "errors": null, "extras": null, "timestamp": 1756093027581 }
+
+
+Delete equipment cargo channel product information
+url: https://openapi1.ourvend.com/OpenAPI/VendSlotCommoditys/Delete
+Method: POST
+{ "vendInventedSlotIds": [ 1111 ], "vendId": "111111" }
+{ "statusCode": 200, "data": true, "succeeded": true, "errors": null, "extras": null, "timestamp": 1756090586538 }
+
+Modify product information for equipment cargo channels
+url: https://openapi1.ourvend.com/OpenAPI/VendSlotCommoditys/ Modify
+Method: POST
+[ { "invslot": [ { "vendInventedSlotId": 0 // Virtual cargo channel ID } ], "vendId": "string", // Machine ID "doorNo": 0, // Door ID "commodityId": "string", // Product ID "price": 0, // Price "capacity": 0, "earlyWaringCount": 0, "earlyWaringRate": true } ]
+{ "statusCode": 200, "data": true, "succeeded": true, "errors": null, "extras": null, "timestamp": 1756093027581 }
+
+Inquire about equipment and cargo information
+url: https://openapi1.ourvend.com/OpenAPI/ {vendId}/VendSlotCommoditys
+Method: GET
+{ "statusCode": 200, "data": { "counter": [ { "doorNo": 1, "doorName": "Door 1", "commodityCateory": 4, "layer": [ { "layerNo": 1, "layerName": "Layer 1", "errorCode": 0, "commodityInfo": [ { "commodityId": "2841388296078021", "sku": "6973870136480", "commodityName": "Master Kong Jasmine Tea 500ml", "price": 5, "pictureUrl": "https://v3hw-oss.ourvend.com/Commodity/20250807/dfa52635b3174ff0b5323cc466943778?x-oss-process=image/auto-orient,1/resize,p_50/quality,q_50", "layerNo": 1, "inventedSlotNo": 1, "vendInventedSlotId": 2845708523061959, "slotId": "2841383910671047", "isLack": false, "isEmpty": false, "stock": 20, "capacity": 199, "earlyWaringCount": 10, "earlyWaringRate": true, "replenishedSales": 0 }, { "commodityId": "2841451537367749", "sku": "6944839905011", "commodityName": "康师傅冰红茶", "price": 5, "pictureUrl": "https://v3hw-oss.ourvend.com/Commodity/20250807/9166da78a5fa4ff2bee4667f90699dce?x-oss-process=image/auto-orient,1/resize,p_50/quality,q_50", "layerNo": 1, "inventedSlotNo": 2, "vendInventedSlotId": 2846699890918085, "slotId": "2841383910671047", "isLack": false, "isEmpty": false, "stock": 20, "capacity": 199, "earlyWaringCount": 10, "earlyWaringRate": true, "replenishedSales": 0 }, { "commodityId": "2841455393456837", "sku": "20240412005", "commodityName": "康师傅冰糖红西柚1L", "price": 4, "pictureUrl": "https://v3hw-oss.ourvend.com/Commodity/20250807/63750de9bb304b6aa2cfb8d667d85ee5?x-oss-process=image/auto-orient,1/resize,p_50/quality,q_50", "layerNo": 1, "inventedSlotNo": 3, "vendInventedSlotId": 2846699952816837, "slotId": "2841383910671047", "isLack": false, "isEmpty": false, "stock": 20, "capacity": 199, "earlyWaringCount": 10, "earlyWaringRate": true, "replenishedSales": 0 } ] }, { "layerNo": 2, "layerName": "第2层", "errorCode": 0, "commodityInfo": [ { "commodityId": "2841451537367749", "sku": "6944839905011", "commodityName": "康师傅冰红茶", "price": 5, "pictureUrl": "https://v3hw-oss.ourvend.com/Commodity/20250807/9166da78a5fa4ff2bee4667f90699dce?x-oss-process=image/auto-orient,1/resize,p_50/quality,q_50", "layerNo": 2, "inventedSlotNo": 4, "vendInventedSlotId": 2846760253063877, "slotId": "2841383910671049", "isLack": true, "isEmpty": false, "stock": 7, "capacity": 199, "earlyWaringCount": 10, "earlyWaringRate": true, "replenishedSales": 0 }, { "commodityId": "2841380367516357", "sku": "6976909180058", "commodityName": "Caifafa Natural Soda Water Jasmine Flavor", "price": 5, "pictureUrl": "https://v3hw-oss.ourvend.com/Commodity/20250807/586a521719f6421fae057ada87fdc9a1?x-oss-process=image/auto-orient,1/resize,p_50/quality,q_50", "layerNo": 2, "inventedSlotNo": 5, "vendInventedSlotId": 2846790611534533, "slotId": "2841383910671049", "isLack": true, "isEmpty": false, "stock": 9, "capacity": 199, "earlyWaringCount": 10, "earlyWaringRate": true, "replenishedSales": 0 } ] }, { "layerNo": 3, "layerName": "Layer 3", "errorCode": 0, "commodityInfo": [] }, { "layerNo": 4, "layerName": "Layer 4", "errorCode": 0, "commodityInfo": [] }, { "layerNo": 5, "layerName": "Layer 5", "errorCode": 0, "commodityInfo": [] } ] }, { "doorNo": 2, "doorName": "door 2", "commodityCateory": 0, "layer": [ { "layerNo": 1, "layerName": "Layer 1", "errorCode": 0, "commodityInfo": [] }, { "layerNo": 2, "layerName": "Layer 2", "errorCode": 0, "commodityInfo": [] }, { "layerNo": 3, "layerName": "Layer 3", "errorCode": 0, "commodityInfo": [] }, { "layerNo": 4, "layerName": "Layer 4", "errorCode": 0, "commodityInfo": [] }, { "layerNo": 5, "layerName": "Layer 5", "errorCode": 0, "commodityInfo": [] } ] } ] }, "succeeded": true, "errors": null, "extras": null, "timestamp": 1756090718697 }
+
+Product listing review callback
+{ "RecordId":"2854238424023749", // Review ID "OrgId":"2294688166347461", "CommodityId":null, "SKU":"2025082801", // Product barcode "State":2, // 2. Pass 3. Reject "Weight":500.00000, // Weight unit (g) "Price":5.00, // Price "RejectCause":null, // Reason for rejection (this value is not empty when state is 3) "ModifyTime":"2025-08-28T09:44:06.683Z", // UTC time "CreateTime":"2025-08-28T09:41:30.205Z" // UTC time }
+
+3. Equipment Management
+Query device type
+URL: https://openapi1.ourvend.com/OpenApi/ VendTypes
+Method: GET
+Example:
+{ "statusCode": 200, "data": [ { "code": "0001", "name": "Dynamic_Cabinet" }, { "code": "0002", "name": "Gravity_Cabinet" }, { "code": "0003", "name": "Static_Cabinet" }, { "code": "0004", "name": "Dynamic_Gravity_Cabinet" }, { "code": "0005", "name": "Single_Gravity_Cabinet" } ], "succeeded": true, "errors": null, "extras": null, "timestamp": 1755650521 }
+Query information for a single device
+URL: https://openapi1.ourvend.com/ OpenApi/Machine/Info/{mid}
+Method: Get
+https://openapi1.ourvend.com/OpenApi/Machine/Info/2412090001
+{ "statusCode": 200, "data": { "machineId": "2412090001", "machineName": "2412090001", "signal": 3, // Signal strength 0~5 "temperature": "24", // Temperature "runningState": 1, // Whether the machine is locked "vendType": "0001" // For specific values of device type, please refer to [13] }, "succeeded": true, "errors": null, "extras": null, "timestamp": 1743496289599 }
+Device Pagination List - V2.1.2
+URL: https://openapi1.ourvend.com/ OpenApi/Machines
+Method: Get
+Request parameters :
+name
+type
+describe
+PageIndex
+string
+Page number (required)
+PageSize
+string
+Page size (required)
+MachineNoOrName
+string
+Equipment number or equipment name
+OnlineStatus
+int
+Online status: 1. Online 2. Offline
+Return value :
+name
+type
+describe
+machineId
+string
+Device ID
+machineName
+string
+Equipment Name
+signal
+int
+signal strength
+temperature
+string
+temperature
+runningState
+int
+Is the phone locked?
+vendType
+string
+Equipment type
+vendTypeName
+string
+Equipment type name
+Equipment Details - V2.1.2
+URL: https://openapi1.ourvend.com/ OpenApi/Machines/{mid}
+Method: Get
+Request parameters :
+name
+type
+describe
+MachineNoOrName
+string
+Equipment number (required)
+Return value :
+name
+type
+describe
+machineId
+string
+Device ID
+machineName
+string
+Equipment Name
+signal
+int
+signal strength
+temperature
+string
+temperature
+runningState
+int
+Is the phone locked?
+vendType
+string
+Equipment type
+vendTypeName
+string
+Equipment type name
+Equipment Control - V2.1.2
+URL: https://openapi1.ourvend.com/ OpenApi/Machines/ Attributes /{mid}
+Method: Post
+Request parameters :
+name
+type
+describe
+mid
+string
+Equipment number (required)
+type
+string
+Temperature input: TEMP; Volume input: VOL
+value
+string
+Temperature: 4°C～25°C, Volume: 0～100
+Return value :
+name
+type
+describe
+statusCode
+int
+Request status code
+succeeded
+boolean
+Was the operation successful?
+4. Operation and Sales
+Obtain information on equipment for sale
+URL: https://openapi1.ourvend.com/ OpenApi/Machine / Commoditys/{mid}
+Method: Get
+https://openapi1.ourvend.com/OpenApi/Machine/Commoditys/2412090001
+{ "statusCode": 200, "data": [ { "commodityId": "2164367863923397", "commodityName": "Wahaha Mineral Water 596ml", "commoditySKU": "69353535", "weight": 596, "price": 3.00, "doorNo": 0, "pictureUrl": "https://ourvendv3.oss-cn-qingdao.aliyuncs.com/ProductImage/9080b157a4b54c63a300907f138a613a.jpg" }, { "commodityId": "2180392082047685", "commodityName": "Oriental Leaf 300ml", "commoditySKU": "69442310", "weight": 300, "price": 3.00, "doorNo": 0, "pictureUrl": "https://ourvendv3.oss-cn-qingdao.aliyuncs.com/ProductImage/5b5e36a2de4f4ba38d2182982096373d.jpg" } ], "succeeded": true, "errors": null, "extras": null, "timestamp": 1743496372493 }
+Obtain device payment configuration information
+URL: https://openapi1.ourvend.com/ OpenApi/Machine / PayConfig/{mid}
+Method: Get
+{ "statusCode": 200, "data": { "machineId":"2412090001", "preAuthorLimit":"50", // Pre-authorization limit "currency":"USD", // Currency "qrCodeUrl":"2412090001", // Shopping QR code address }, "succeeded": true, "errors": null, "extras": null, "timestamp": 1743496372493 }
+Request to open the door
+URL : https://openapi1.ourvend.com/ OpenApi/Order/OpenDoor
+Method : POST
+parameter :
+name
+type
+describe
+OrderId
+string
+Order number (required)
+MachineId
+string
+Machine number (required)
+Door No
+int
+Door number (required)
+TranseType
+int
+Door opening method (required): 0 Purchase 2 Restock
+Customer Details
+string
+Custom messages (consumer data)
+TimeSp
+long
+Timestamp
+NotifyUrl
+string
+Callback URL for operation result (required)
+Remark
+string
+Notes up to 128
+Return value :
+name
+type
+describe
+OrderId
+string
+Order number
+TranseType
+int
+Door opening method 0 Purchase 2 Restock
+Action
+string
+Action identifiers (PreOpenDoor, OpenedDoor, ClosedDoor, OrderDetected)
+Status
+bool
+Operation status
+Msg
+string
+Operation Description
+Data
+string
+Results data
+TransId
+string
+Please use this ID when querying order details.
+{ "orderId": "xxxxxxxxxxxxxxxx", "machineId": "xxxxxxxxxxxxxx", "doorNo": 1, "transeType":1, "customerDetails": "1", "timeSp": 1741758180, "NotifyUrl":"xxxxxxxxxxxxxxx", "transId": "123456" }
+Actively query door opening results - V2.1.2
+URL: https://openapi1.ourvend.com/ OpenApi/Order / OpenDoor/{ TransId }
+Method: Get
+parameter :
+name
+type
+describe
+TransId
+string
+Transaction ID , obtained upon successful OpenDoor door opening (required).
+Return value :
+name
+type
+describe
+OrderId
+string
+Order number
+TranseType
+int
+Door opening method 0 Purchase 2 Restock
+machineId
+string
+Machine number
+openDoorTime
+date
+Opening Time
+closeDoorTime
+date
+Closing Time
+detectResult
+string
+Recognition results
+state
+int
+Order status: 1 In progress, 4 Completed, 8 Cancelled
+Order retrieval video - V2.1.2
+URL: https://openapi1.ourvend.com/ OpenApi/Order / Video/{ TransId }
+Method: Get
+parameter :
+name
+type
+describe
+TransId
+string
+Transaction ID , obtained upon successful OpenDoor door opening (required).
+Return value :
+name
+type
+describe
+OrderId
+string
+Order number
+TranseType
+int
+Door opening method 0 Purchase 2 Restock
+machineId
+string
+Machine number
+videoMainUrl
+date
+Main video address
+videoViceUrl
+date
+Secondary video address
+videoStatus
+int
+-1: Pending upload, 0: Upload complete, 1: Video does not exist, 2: Network error, please try again, 3: Video uploading
+Get Order Details - (Deprecated)
+url: https://openapi1.ourvend.com/OpenAPI/ Order/{transId}/Detail
+Method: Get
+{ "statusCode": 200, "data": { "orderId": "2474742233039557", "createTime": "2024-12-03T07:38:00.985Z", // Creation time "openDoorTime": "2024-12-03T07:38:05.788Z", // Door opening time "closeDoorTime": "2024-12-03T07:38:17.209569Z", // Door closing time "detectResult": null, "detected": false, // Whether it has been detected "state": 1, // Order status 1 In progress 4 Completed 8 Cancelled "videoMainUrl": "https://xxxxx.mp3", // Main video address may be empty "videoViceUrl": "https://xxxxx.mp3" // Secondary video address may be empty }, "succeeded": true, "errors": null, "extras": null, "timestamp": 1760492234073 }
+Confirm replenishment data
+URL : https://openapi1.ourvend.com/OpenApi/Repli/Confirm Method : POST Parameters :
+name
+type
+Required
+describe
+Mid
+string
+yes
+Merchant ID
+TransId
+long
+yes
+Transaction ID
+TrackingId
+string
+yes
+Track ID
+Door No
+int
+yes
+Number
+Data
+List<ConfirmRepliItem>
+yes
+Confirmed replenishment data list
+ConfirmRepliItem structure:
+name
+type
+Required
+describe
+CommodityId
+string
+yes
+Product ID
+LayerNo
+int
+yes
+Product location layer
+SpotCount
+int
+yes
+Replenishment quantity
+StockCount
+int
+yes
+Calibrated inventory
+Sno
+int
+yes
+Goods arrival number
+Return parameters:
+name
+type
+describe
+TrackingId
+string
+Track ID
+TransId
+long
+Transaction ID
+Success
+bool
+Success or failure?
+Message
+string
+Returned message
+Example
+Request Example
+{ "Mid": "xxxxxxxxxxx", "TransId": 1234567890123, "TrackingId": "xxxxxxxxxxxxxxx", "DoorNo": 1, "Data": [ { "CommodityId": "xxxxxxxxxxxx1", "LayerNo": 2, "SpotCount": 1, "StockCount": 500, "Sno": 123 }, { "CommodityId": "xxxxxxxxxxxxx", "LayerNo": 3, "SpotCount": 2, "StockCount": 1000, "Sno": 124 } ] }
+Response Example
+{ "TrackingId": "tracking-id-001", "TransId": 1234567890123, "Success": true, "Message": "Replenishment data confirmed successfully" }
+Order Transaction Result Reporting Interface
+illustrate :
+URL : https://openapi1.ourvend.com/ OpenApi/Order/ReportPaymentResult
+Method : POST
+parameter :
+name
+type
+describe
+OrderId
+string
+Order number (required), or third-party refund number when PayType is refund.
+OrderNo
+string
+SaaS API Order Number (required). If PayType is Refund, this is the SaaS Refund Order Number (RefundOrderNo).
+PayType
+int
+Payment type 0: Normal transaction, 1: Additional deduction, 2: Refund
+PayStatus
+int
+Payment Status (Required) : 1 Success 2 Failure
+ErrorMessage
+string
+Payment failure message
+Product Details
+string
+Product Details
+Return value :
+name
+type
+describe
+data
+bool
+Was the report successful?
+Request Body (JSON)
+{ "OrderId": "your OrderId", "OrderNo": "233355444", "PayType":0, "PayStatus": 1, "ErrorMessage": "" }
+Response Example
+{ "OrderId": "your OrderId", "Status": true, "Message": "Order processed successfully" }
+
+Order Result Reporting V2
+illustrate :
+URL : https://openapi1.ourvend.com/ OpenApi/Order/V2/ReportPaymentResult
+Method : POST
+parameter :
+name
+type
+describe
+OrderId
+string
+Order number (required), or third-party refund number when PayType is refund.
+OrderNo
+string
+SaaS API Order Number (required). If PayType is Refund, this is the SaaS Refund Order Number (RefundOrderNo).
+PayType
+int
+Payment type 0: Normal transaction, 1: Additional deduction, 2: Refund
+PayStatus
+int
+Payment Status (Required) : 1 Success 2 Failure
+ErrorMessage
+string
+Payment failure message
+Products
+Array
+Product details (required when payment status is 1 and payment type is not refund)
+name
+type
+describe
+CommodityId
+string
+Product ID
+CommodityPrice
+decimal
+unit price of goods
+PayAmount
+decimal
+Total amount of goods
+
+Return value :
+name
+type
+describe
+data
+bool
+Was the report successful?
+Request Body (JSON)
+{ "OrderId": "your OrderId", "OrderNo": "233355444", "PayType":0, "PayStatus": 1, "ErrorMessage": "", "Products": [ { "CommodityId": "12341234", "CommodityPrice": 10.0, "PayAmount": 20 } ] }
+Response Example
+{ "OrderId": "your OrderId", "Status": true, "Message": "Order processed successfully" }
+Order callback notification
+9.1 OpenDoor Door Opening Event Response
+name
+type
+describe
+OrderId
+string
+Order number
+OrderNo
+string
+SaaS API Order Number
+TranseType
+int
+Door opening method 0 Purchase 2 Restock
+Action
+string
+OpenedDoor
+Status
+bool
+Operation status
+Msg
+string
+Operation Description
+Customer Details
+string
+User-defined information, parameters passed before opening the door.
+Data
+string
+Results data
+9.2 CloseDoor closing event response
+name
+type
+describe
+OrderId
+string
+Order number
+OrderNo
+string
+SaaS API Order Number
+TranseType
+int
+Door opening method 0 Purchase 2 Restock
+Action
+string
+CloseDoor
+Status
+bool
+Operation status
+Msg
+string
+Operation Description
+Customer Details
+string
+User-defined information, parameters passed before opening the door.
+Data
+string
+Results data
+9.3 Cancel Order Event Response
+Note: This event is triggered when the machine fails to open or reports an error when closing the door.
+name
+type
+describe
+OrderId
+string
+Order number
+OrderNo
+string
+SaaS API Order Number
+TranseType
+int
+Door opening method 0 Purchase 2 Restock
+Action
+string
+Cancel
+Status
+bool
+Operation status
+Msg
+string
+Operation Description
+Customer Details
+string
+User-defined information, parameters passed before opening the door.
+Data
+string
+Results data
+9.4 OrderDetected
+Note: This event is triggered when an order has entered the AI recognition stage.
+
+
+name
+type
+describe
+OrderId
+string
+Order number
+OrderNo
+string
+SaaS API Order Number
+TranseType
+int
+Transaction type (0 - Order, 2 - Replenishment)
+OrgId
+string
+Merchant ID
+Action
+string
+Action type
+Status
+bool
+Transaction status
+Msg
+string
+Identify prompt content
+Data
+DetectOrderDetailJson
+Recognition results
+DetectOrderDetailJson
+name
+type
+describe
+TradeProcessMode
+int
+Transaction processing mode: (0 = normal transaction, 1 = canceled transaction, 2 = interrupted transaction)
+when TradeProcessMode=0.
+TradeProcessMode=1 Cancel Transaction
+TradeProcessMode=2 interrupts the transaction, leaving it to the merchant to determine.
+TradeProductModels
+
+Product Contents
+Id
+string
+Product ID
+AlisName
+string
+Product Name
+BuyCount
+int
+Purchase Quantity
+MeterType
+int
+Pricing method: (1 = number of pieces, 2 = weight)
+Price
+money
+unit price of goods
+PictureUrl
+string
+Product image address
+Return status description:
+1. Normal recognition ( Status=True )
+    a. Data.TradeProcessMode = 0 Normal transactions will return the recognition result.
+    b. When TradeProcessMode=1, the identification result is "Transaction Cancelled". Common reasons include:
+        i. Opened the door but did not make any purchases
+    c. When TradeProcessMode=2, the identification result is "Merchant decides for themselves." Common reasons for this include:
+Exception Name
+type
+describe
+Obstructing the camera
+Unfriendly shopping
+
+Replace the items in the cabinet
+Unfriendly shopping
+
+Insert foreign object
+Unfriendly shopping
+
+malicious damage to goods
+Unfriendly shopping
+
+Cover the goods
+Unfriendly shopping
+
+Super long shopping time
+Unfriendly shopping
+
+Suspected merchant restocking
+Unfriendly shopping
+
+Other abnormal behaviors
+Unfriendly shopping
+
+
+
+
+Incomplete video or distorted screen
+Alarm
+
+The goods in the equipment have not been replenished.
+Alarm
+
+High product similarity
+Alarm
+
+The video is too long after the door is closed.
+Alarm
+
+Purchase interrupted power
+Alarm
+
+
+
+
+2. Identify anomalies when the following conditions occur ( Status=False, Msg=reason for anomaly ).
+Identify abnormal prompts
+Container type
+
+Gravity cabinet recognition error, gravity data not uploaded.
+Gravity cabinet
+
+Unable to obtain sensor data
+Gravity cabinet
+
+abnormal overweight
+Gravity cabinet
+
+Snapshot query of open products failed
+Gravity cabinet
+
+The number of items in the mirror table is less than the number of items identified.
+Gravity cabinet
+
+The request object failed to be constructed.
+Visual cabinet
+
+Failed to identify the requested object
+Visual cabinet
+
+Video retrieval failed
+Visual cabinet
+
+No video
+Visual cabinet
+
+Order product mirror table query failed
+Visual cabinet
+
+Platform recognition failed
+Visual cabinet
+
+9.5 Manual Settlement Order Event Response
+Note: This event is triggered when an order is identified as abnormal and the merchant or platform processes the settlement.
+name
+type
+describe
+OrderId
+string
+Order number
+OrderNo
+string
+SaaS API Order Number
+TranseType
+int
+Door opening method 0 Purchase
+Action
+string
+OrderSettlement
+Status
+bool
+Operation status
+Msg
+string
+Operation Description
+Customer Details
+string
+User-defined information, parameters passed before opening the door.
+Data
+DetectOrderDetailJson
+Results data
+DetectOrderDetailJson
+name
+type
+describe
+TradeProcessMode
+int
+Transaction processing mode: (0 = normal transaction, 1 = canceled transaction, 2 = interrupted transaction)
+when TradeProcessMode=0.
+TradeProcessMode=1 Cancel Transaction
+TradeProcessMode=2 interrupts the transaction, leaving it to the merchant to determine.
+TradeProductModels
+
+Product Contents
+Id
+string
+Product ID
+AlisName
+string
+Product Name
+BuyCount
+int
+Purchase Quantity
+MeterType
+int
+Pricing method: (1 = number of pieces, 2 = weight)
+price
+money
+unit price of goods
+
+9.6 Response to Order Supplementary Deduction Events
+Note: This event is triggered when the merchant clicks the "refund" button.
+name
+type
+describe
+OrderId
+string
+Order number
+OrderNo
+string
+SaaS API Order Number
+TranseType
+int
+Door opening method 0 Purchase
+Action
+string
+OrderAdjustment
+Status
+bool
+Operation status
+Msg
+string
+Operation Description
+Customer Details
+string
+User-defined information, parameters passed before opening the door.
+Data
+OrderAdjustment
+Results data
+OrderAdjustment
+name
+type
+describe
+OrderNo
+string
+Order number to be deducted
+OrderProducts
+
+Product Contents
+Id
+string
+Product ID
+AlisName
+string
+Product Name
+BuyCount
+int
+Purchase Quantity
+MeterType
+int
+Pricing method: (1 = number of pieces, 2 = weight)
+Price
+money
+unit price of goods
+9.7 Refund Order Event Response
+Note: This event is triggered when the merchant clicks the refund button.
+name
+type
+describe
+OrderId
+string
+Order number
+OrderNo
+string
+SaaS API Order Number
+TranseType
+int
+Door opening method 0 Purchase
+Action
+string
+OrderRefund
+Status
+bool
+Operation status
+Msg
+string
+Operation Description
+Customer Details
+string
+User-defined information, parameters passed before opening the door.
+Data
+OrderRefund
+Results data
+OrderRefund
+name
+type
+describe
+RefundRemark
+string
+Refund Instructions
+Refund Order No
+string
+Refund order number
+OrderRefundProducts
+
+Product Contents
+Id
+string
+Product ID
+AlisName
+string
+Product Name
+BuyCount
+int
+Purchase Quantity
+MeterType
+int
+Pricing method: (1 = number of pieces, 2 = weight)
+Price
+money
+unit price of goods
+9.8. Order Anomaly Explanation:
+9.8.1 Visual Merchandising Cabinet
+Exception Name
+type
+describe
+Obstructing the camera
+Unfriendly shopping
+
+Replace the items in the cabinet
+Unfriendly shopping
+
+Insert foreign object
+Unfriendly shopping
+
+malicious damage to goods
+Unfriendly shopping
+
+Cover the goods
+Unfriendly shopping
+
+Super long shopping time
+Unfriendly shopping
+
+Suspected merchant restocking
+Unfriendly shopping
+
+Other abnormal behaviors
+Unfriendly shopping
+
+
+
+
+Incomplete video or distorted screen
+Alarm
+
+The goods in the equipment have not been replenished.
+Alarm
+
+High product similarity
+Alarm
+
+The video is too long after the door is closed.
+Alarm
+
+Purchase interrupted power
+Alarm
+
+
+
+
+9.8.2 Gravity Cabinet

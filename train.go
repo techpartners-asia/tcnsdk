@@ -1,6 +1,7 @@
 package tcnsdk
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/techpartners-asia/tcnsdk/structs"
@@ -14,14 +15,15 @@ func NewTrainService(client *Client) *TrainService {
 	return &TrainService{client: client}
 }
 
-func (s *TrainService) TrainProduct(req *structs.ProductTrainRequest) (*structs.ProductTrainResponse, error) {
+func (s *TrainService) TrainProduct(ctx context.Context, req *structs.ProductTrainRequest) (*structs.ProductTrainResponse, error) {
 	var resp structs.ProductTrainResponse
-	authResp, err := s.client.getAuthResponse()
+	authResp, err := s.client.getAuthResponse(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get auth response: %w", err)
 	}
 
 	_, err = s.client.client.R().
+		SetContext(ctx).
 		SetAuthToken(authResp.Data.Token).
 		SetBody(req).
 		SetResult(&resp).
@@ -34,14 +36,15 @@ func (s *TrainService) TrainProduct(req *structs.ProductTrainRequest) (*structs.
 	return &resp, nil
 }
 
-func (s *TrainService) ListProductTrainRequest(req *structs.ListProductTrainRequest) (*structs.ListProductTrainResponse, error) {
+func (s *TrainService) ListProductTrainRequest(ctx context.Context, req *structs.ListProductTrainRequest) (*structs.ListProductTrainResponse, error) {
 	var resp structs.ListProductTrainResponse
-	authResp, err := s.client.getAuthResponse()
+	authResp, err := s.client.getAuthResponse(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get auth response: %w", err)
 	}
 
 	_, err = s.client.client.R().
+		SetContext(ctx).
 		SetAuthToken(authResp.Data.Token).
 		SetBody(req).
 		SetQueryParam("recordId", fmt.Sprintf("%d", req.RecordID)).
@@ -54,18 +57,19 @@ func (s *TrainService) ListProductTrainRequest(req *structs.ListProductTrainRequ
 
 	return &resp, nil
 }
-func (s *TrainService) GetTrainRequest(id string) (*structs.ProductTrain, error) {
+func (s *TrainService) GetTrainRequest(ctx context.Context, id string) (*structs.ProductTrain, error) {
 	var resp structs.ListProductTrainResponse
-	authResp, err := s.client.getAuthResponse()
+	authResp, err := s.client.getAuthResponse(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get auth response: %w", err)
 	}
 
 	_, err = s.client.client.R().
+		SetContext(ctx).
 		SetAuthToken(authResp.Data.Token).
 		SetQueryParam("recordId", id).
 		SetResult(&resp).
-		Post("/OpenApi/CommodityApply/Record")
+		Get("/OpenApi/CommodityApply/Record")
 
 	if err != nil {
 		return nil, fmt.Errorf("failed to list product train request: %w", err)

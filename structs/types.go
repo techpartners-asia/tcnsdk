@@ -261,6 +261,53 @@ type MachineInfoResponse struct {
 	Data MachineInfo `json:"data"`
 }
 
+type DeviceType struct {
+	Code string `json:"code"`
+	Name string `json:"name"`
+}
+
+type DeviceTypeResponse struct {
+	BaseResponse
+	Data []DeviceType `json:"data"`
+}
+
+type MachineListRequest struct {
+	PageIndex       uint   `json:"pageIndex"`
+	PageSize        uint   `json:"pageSize"`
+	MachineNoOrName string `json:"machineNoOrName,omitempty"`
+	OnlineStatus    *int   `json:"onlineStatus,omitempty"`
+}
+
+type MachineSummary struct {
+	MachineID    string `json:"machineId"`
+	MachineName  string `json:"machineName"`
+	Signal       int    `json:"signal"`
+	Temperature  string `json:"temperature"`
+	RunningState int    `json:"runningState"`
+	VendType     string `json:"vendType"`
+	VendTypeName string `json:"vendTypeName"`
+}
+
+type MachineListResponse struct {
+	BaseResponse
+	Data struct {
+		Total     uint             `json:"total"`
+		PageSize  uint             `json:"pageSize"`
+		PageIndex uint             `json:"pageIndex"`
+		Message   string           `json:"message"`
+		Items     []MachineSummary `json:"items"`
+	} `json:"data"`
+}
+
+type MachineControlRequest struct {
+	Type  string `json:"type"`
+	Value string `json:"value"`
+}
+
+type MachineControlResponse struct {
+	BaseResponse
+}
+
 // Commodity represents product information
 type Commodity struct {
 	Sku                string  `json:"sku"`
@@ -330,6 +377,35 @@ type ConfirmRepliResponse struct {
 	Message    string `json:"Message"`
 }
 
+type OpenDoorStatusResponse struct {
+	BaseResponse
+	Data OpenDoorStatus `json:"data"`
+}
+
+type OpenDoorStatus struct {
+	OrderID       string     `json:"orderId"`
+	TranseType    TranseType `json:"transeType"`
+	MachineID     string     `json:"machineId"`
+	OpenDoorTime  time.Time  `json:"openDoorTime"`
+	CloseDoorTime time.Time  `json:"closeDoorTime"`
+	DetectResult  string     `json:"detectResult"`
+	State         int        `json:"state"`
+}
+
+type OrderVideoResponse struct {
+	BaseResponse
+	Data OrderVideoData `json:"data"`
+}
+
+type OrderVideoData struct {
+	OrderID      string     `json:"orderId"`
+	TranseType   TranseType `json:"transeType"`
+	MachineID    string     `json:"machineId"`
+	VideoMainURL string     `json:"videoMainUrl"`
+	VideoViceURL string     `json:"videoViceUrl"`
+	VideoStatus  int        `json:"videoStatus"`
+}
+
 // ReportPaymentResultRequest represents payment result reporting request
 type ReportPaymentResultRequest struct {
 	OrderID      string    `json:"OrderId"`
@@ -341,6 +417,27 @@ type ReportPaymentResultRequest struct {
 
 // ReportPaymentResultResponse represents payment result reporting response
 type ReportPaymentResultResponse struct {
+	OrderID string `json:"OrderId"`
+	Status  bool   `json:"Status"`
+	Message string `json:"Message"`
+}
+
+type ReportPaymentResultV2Request struct {
+	OrderID      string                 `json:"OrderId"`
+	OrderNo      string                 `json:"OrderNo"`
+	PayType      PayType                `json:"PayType"`
+	PayStatus    PayStatus              `json:"PayStatus"`
+	ErrorMessage string                 `json:"ErrorMessage,omitempty"`
+	Products     []ReportPaymentProduct `json:"Products,omitempty"`
+}
+
+type ReportPaymentProduct struct {
+	CommodityID    string  `json:"CommodityId"`
+	CommodityPrice float64 `json:"CommodityPrice"`
+	PayAmount      float64 `json:"PayAmount"`
+}
+
+type ReportPaymentResultV2Response struct {
 	OrderID string `json:"OrderId"`
 	Status  bool   `json:"Status"`
 	Message string `json:"Message"`
@@ -796,4 +893,67 @@ type OrderData struct {
 	DetectResult  DetectOrderDetail `json:"detectResult"` // can be null or structured
 	Detected      bool              `json:"detected"`
 	State         int               `json:"state"` // 1: In progress, 4: Completed, 8: Cancelled
+}
+
+type ProductUploadRequest struct {
+	SKU              string   `json:"sku"`
+	Name             string   `json:"name"`
+	Price            float64  `json:"price"`
+	PictureURL       string   `json:"pictureUrl"`
+	BackImage        string   `json:"backImage,omitempty"`
+	ProfileImage     string   `json:"profileImage,omitempty"`
+	TopOrBottomImage string   `json:"topOrBottomImage,omitempty"`
+	PictureURLBottom string   `json:"pictureUrl_Bottom,omitempty"`
+	PictureURLOther  string   `json:"pictureUrl_Other,omitempty"`
+	PictureURLOthers []string `json:"pictureUrl_Others,omitempty"`
+	Weight           float64  `json:"weight"`
+	Packing          string   `json:"packing"`
+}
+
+type ProductUploadResponse struct {
+	BaseResponse
+	Data string `json:"data"`
+}
+
+type ProductApplyListRequest struct {
+	PageIndex uint   `json:"pageIndex"`
+	PageSize  uint   `json:"pageSize"`
+	Sku       string `json:"sku,omitempty"`
+	State     *State `json:"state,omitempty"`
+}
+
+type ProductApply struct {
+	ID                string    `json:"id"`
+	Sku               string    `json:"sku"`
+	Name              string    `json:"name"`
+	PictureURL        string    `json:"pictureUrl"`
+	MeterType         MeterType `json:"meterType"`
+	MeterUnit         string    `json:"meterUnit"`
+	Weight            float64   `json:"weight"`
+	CustomerCostPrice float64   `json:"customerCostPrice"`
+	CostPrice         float64   `json:"costPrice"`
+	SupportType       string    `json:"supportType"`
+	SupportTypeName   string    `json:"supportTypeName"`
+	State             State     `json:"state"`
+	RejectCause       string    `json:"rejectCause"`
+	BackImage         string    `json:"backImage"`
+	ProfileImage      string    `json:"profileImage"`
+	TopOrBottomImage  string    `json:"topOrBottomImage"`
+	PictureURLExtra   string    `json:"pictureUrlExtra"`
+}
+
+type ProductApplyListResponse struct {
+	BaseResponse
+	Data struct {
+		Total     uint           `json:"total"`
+		PageSize  uint           `json:"pageSize"`
+		PageIndex uint           `json:"pageIndex"`
+		Message   string         `json:"message"`
+		Items     []ProductApply `json:"items"`
+	} `json:"data"`
+}
+
+type ProductApplyDetailResponse struct {
+	BaseResponse
+	Data ProductApply `json:"data"`
 }

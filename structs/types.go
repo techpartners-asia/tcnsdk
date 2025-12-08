@@ -199,16 +199,16 @@ type ListProductTrainResponse struct {
 
 type ProductTrain struct {
 	Product
-	State           State    `json:"state"`
-	RejectCause     string   `json:"rejectCause"`
-	OrganizeID      string   `json:"organizeId"`
-	QualityID       string   `json:"qualityId"`
-	QualityPeroid   int      `json:"qualityPeroid"`
-	ModifyUserName  string   `json:"modifyUserName"`
-	IsPovertyRelief bool     `json:"isPovertyRelief"`
-	Nature          string   `json:"nature"`
-	Tags            []string `json:"tags"`
-	ApplicationType int      `json:"applicationType"`
+	State           State  `json:"state"`
+	RejectCause     string `json:"rejectCause"`
+	OrganizeID      string `json:"organizeId"`
+	QualityID       string `json:"qualityId"`
+	QualityPeroid   int    `json:"qualityPeroid"`
+	ModifyUserName  string `json:"modifyUserName"`
+	IsPovertyRelief bool   `json:"isPovertyRelief"`
+	Nature          string `json:"nature"`
+	Tags            string `json:"tags"`
+	ApplicationType int    `json:"applicationType"`
 }
 
 type State int

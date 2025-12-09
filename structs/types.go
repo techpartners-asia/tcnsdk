@@ -165,6 +165,11 @@ type ProductListResponse struct {
 	} `json:"data"`
 }
 
+type GetProductResponse struct {
+	BaseResponse
+	Data *Product `json:"data"`
+}
+
 type Product struct {
 	ID                string    `json:"id"`
 	ExtCommodityID    string    `json:"extCommodityId"`

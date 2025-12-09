@@ -18,8 +18,8 @@ func NewProductService(client *Client) *ProductService {
 
 // GetProduct returns a product by ID or SKU
 // you can pass either productID or sku
-func (s *ProductService) GetProduct(ctx context.Context, productIDorSku string) (*structs.Product, error) {
-	var resp structs.Product
+func (s *ProductService) GetProduct(ctx context.Context, productIDorSku string) (*structs.GetProductResponse, error) {
+	var resp structs.GetProductResponse
 	authResp, err := s.client.getAuthResponse(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get auth response: %w", err)

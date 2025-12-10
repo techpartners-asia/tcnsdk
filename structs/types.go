@@ -886,20 +886,33 @@ type RestockOpenDoorResponse struct {
 	Data RestockOpenDoorData `json:"data"`
 }
 
-type OrderDetailResponse struct {
+type OrderDetailRawResponse struct {
 	BaseResponse
-	Data OrderData `json:"data"`
+	Data OrderRawData `json:"data"`
+}
+type OrderDetailParsedResponse struct {
+	BaseResponse
+	Data OrderParsedData `json:"data"`
 }
 
-type OrderData struct {
+type OrderRawData struct {
 	OrderID       string    `json:"orderId"`
 	CreateTime    time.Time `json:"createTime"`
 	OpenDoorTime  time.Time `json:"openDoorTime"`
 	CloseDoorTime time.Time `json:"closeDoorTime"`
-	// we need to parse this field: DetectOrderDetail
+	// DetectOrderDetail
 	DetectResult *string `json:"detectResult"` // can be null or structured
 	Detected     bool    `json:"detected"`
 	State        int     `json:"state"` // 1: In progress, 4: Completed, 8: Cancelled
+}
+type OrderParsedData struct {
+	OrderID       string             `json:"orderId"`
+	CreateTime    time.Time          `json:"createTime"`
+	OpenDoorTime  time.Time          `json:"openDoorTime"`
+	CloseDoorTime time.Time          `json:"closeDoorTime"`
+	DetectResult  *DetectOrderDetail `json:"detectResult"` // can be null or structured
+	Detected      bool               `json:"detected"`
+	State         int                `json:"state"` // 1: In progress, 4: Completed, 8: Cancelled
 }
 
 type ProductUploadRequest struct {

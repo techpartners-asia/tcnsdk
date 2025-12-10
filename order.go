@@ -2,6 +2,7 @@ package tcnsdk
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"time"
 
@@ -67,8 +68,8 @@ func (s *OrderService) RestockOpenDoor(ctx context.Context, req *structs.Restock
 }
 
 // OrderDetail retrieves order detail by transaction ID
-func (s *OrderService) OrderDetail(ctx context.Context, transID string) (*structs.OrderDetailResponse, error) {
-	var resp structs.OrderDetailResponse
+func (s *OrderService) OrderDetail(ctx context.Context, transID string) (*structs.OrderDetailParsedResponse, error) {
+	var resp structs.OrderDetailRawResponse
 	authResp, err := s.client.getAuthResponse(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get auth response: %w", err)
@@ -85,7 +86,28 @@ func (s *OrderService) OrderDetail(ctx context.Context, transID string) (*struct
 		return nil, fmt.Errorf("failed to get order detail: %w", err)
 	}
 
-	return &resp, nil
+	var detectedInput *structs.DetectOrderDetail
+	if resp.Data.DetectResult == nil {
+		err = json.Unmarshal([]byte(*resp.Data.DetectResult), &detectedInput)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	parsedResp := structs.OrderDetailParsedResponse{
+		BaseResponse: resp.BaseResponse,
+		Data: structs.OrderParsedData{
+			OrderID:       resp.Data.OrderID,
+			CreateTime:    resp.Data.CreateTime,
+			OpenDoorTime:  resp.Data.OpenDoorTime,
+			CloseDoorTime: resp.Data.CloseDoorTime,
+			DetectResult:  detectedInput,
+			Detected:      resp.Data.Detected,
+			State:         resp.Data.State,
+		},
+	}
+
+	return &parsedResp, nil
 }
 
 // GetOpenDoorStatus polls the status for a door-open transaction

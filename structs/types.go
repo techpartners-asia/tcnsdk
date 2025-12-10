@@ -855,7 +855,7 @@ type OrderRefund struct {
 type OpenDoorData struct {
 	OrderID         string         `json:"orderId"`
 	TranseType      TranseType     `json:"transeType"`
-	transId         string         `json:"transId"`
+	TransId         string         `json:"transId"`
 	Action          CallbackAction `json:"action"`
 	Status          bool           `json:"status"`
 	Msg             string         `json:"msg"`

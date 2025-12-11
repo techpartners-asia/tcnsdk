@@ -87,8 +87,8 @@ func (s *OrderService) OrderDetail(ctx context.Context, transID string) (*struct
 	}
 
 	var detectedInput *structs.DetectOrderDetail
-	if resp.Data.DetectResult == nil {
-		err = json.Unmarshal([]byte(*resp.Data.DetectResult), &detectedInput)
+	if resp.Data.DetectResult != nil {
+		err = json.Unmarshal([]byte(*resp.Data.DetectResult), detectedInput)
 		if err != nil {
 			return nil, err
 		}

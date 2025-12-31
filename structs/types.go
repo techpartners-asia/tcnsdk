@@ -102,7 +102,9 @@ type ProductListRequest struct {
 	CommodityType string `json:"commodityType"`
 	SupportType   string `json:"supportType"`
 }
-type AddProductToMachineRequest struct {
+type AddProductToMachineRequest []AddProductToMachineItem
+
+type AddProductToMachineItem struct {
 	VendID          string  `json:"vendId"`
 	CommodityID     string  `json:"commodityId"`
 	LayerNo         int     `json:"layerNo"`

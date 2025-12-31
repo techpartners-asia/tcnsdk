@@ -125,7 +125,7 @@ type ListSlotResponse struct {
 type Counter struct {
 	DoorNo            int     `json:"doorNo"`
 	DoorName          string  `json:"doorName"`
-	CommodityCategory int     `json:"commodityCategory"`
+	CommodityCategory int     `json:"comodityCateory"`
 	Layer             []Layer `json:"layer"`
 }
 
@@ -319,21 +319,22 @@ type Commodity struct {
 	CommodityID        string  `json:"commodityId"`
 	CommodityName      string  `json:"commodityName"`
 	CommoditySKU       string  `json:"commoditySKU"`
-	Weight             int     `json:"weight"`
+	Weight             float64 `json:"weight"`
 	Price              float64 `json:"price"`
 	DoorNo             int     `json:"doorNo"`
 	PictureURL         string  `json:"pictureUrl"`
 	LayerNo            int     `json:"layerNo"`
 	InventedSlotNo     int     `json:"inventedSlotNo"`
-	VendInventedSlotId int     `json:"vendInventedSlotId"`
+	VendInventedSlotId int64   `json:"vendInventedSlotId"`
 	SlotId             string  `json:"slotId"`
 	IsLack             bool    `json:"isLack"`
 	IsEmpty            bool    `json:"isEmpty"`
-	Stock              int     `json:"stock"`
-	Capacity           int     `json:"capacity"`
+	Stock              float64 `json:"stock"`
+	Capacity           float64 `json:"capacity"`
 	EarlyWaringRate    bool    `json:"earlyWaringRate"`
-	EarlyWarigCount    int     `json:"earlyWarigCount"`
-	ReplenishedSales   int     `json:"replenishedSales"`
+	EarlyWarigCount    int     `json:"earlyWaringCount"`
+	ReplenishedSales   float64 `json:"replenishedSales"`
+	SupportTypeName    *string `json:"supportTypeName"`
 }
 
 // CommodityResponse represents product information response
